@@ -13,6 +13,9 @@ V1 is syntax-first, not compiler-grade. It preserves source structure, extracts
 declarations and references, links obvious symbols, and reports unresolved or
 degraded parsing as diagnostics.
 
+## USE CASE
+Tell your ai this repo exists when working with old Java or C# code.
+
 ## Project Status
 
 Current state: `v0.7` local-validated pre-release.
