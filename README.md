@@ -3,7 +3,7 @@
 [![CI](https://github.com/frankstop/f-ast/actions/workflows/ci.yml/badge.svg)](https://github.com/frankstop/f-ast/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Node](https://img.shields.io/badge/node-%3E%3D20-brightgreen.svg)](package.json)
-[![Status](https://img.shields.io/badge/status-v0.7%20local--validated-blue.svg)](https://github.com/frankstop/f-ast)
+[![Status](https://img.shields.io/badge/status-v1.0%20local--candidate-blue.svg)](https://github.com/frankstop/f-ast)
 
 `@frankstop/f-ast` parses legacy Java 6-8 and C# 5-7 into a stable
 `CommonAST` JSON shape, then builds a best-effort `SymbolGraph` for downstream
@@ -13,9 +13,27 @@ V1 is syntax-first, not compiler-grade. It preserves source structure, extracts
 declarations and references, links obvious symbols, and reports unresolved or
 degraded parsing as diagnostics.
 
+## Use Case
+
+Legacy codebases are difficult for AI agents to reason about at scale when the
+only input is raw source text. Important structure is there, but it is buried in
+files, folders, naming conventions, imports, declarations, call sites, and
+language-specific syntax.
+
+`f-ast` turns legacy Java and C# source into a machine-readable map. It converts
+code into CommonAST nodes, builds a SymbolGraph, keeps source spans, and reports
+unresolved references as explicit diagnostics. That gives AI agents and analysis
+tools a structured view of what exists, where it lives, and how pieces appear to
+connect.
+
+The strongest use case is making legacy systems more AI-agent-friendly before
+modernization work starts: inventory the code, inspect dependencies, find likely
+entry points, identify unresolved edges, and give downstream tools structured
+context instead of asking them to infer everything from raw text.
+
 ## Project Status
 
-Current state: `v0.7` local-validated pre-release.
+Current state: `v1.0` local release candidate.
 
 - Public repo: `frankstop/f-ast`
 - Package name: `@frankstop/f-ast`
@@ -127,6 +145,10 @@ More detail:
 - [CommonAST](docs/common-ast.md)
 - [SymbolGraph](docs/symbol-graph.md)
 - [Diagnostics](docs/diagnostics.md)
+- [Release Checklist](docs/release-checklist.md)
+- [V1 Roadmap](docs/v1-roadmap.md)
+- [Known Limitations](docs/known-limitations.md)
+- [v1.0.0 Release Notes](docs/release-notes-v1.0.0.md)
 - [CommonAST JSON Schema](schemas/common-ast.schema.json)
 
 ## Development
@@ -137,6 +159,8 @@ npm run typecheck
 npm test
 npm run build
 npm run test:smoke
+npm run pack:smoke
+npm run release:dry-run
 ```
 
 `npm run check` runs the full local gate.
