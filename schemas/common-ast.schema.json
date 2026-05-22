@@ -1,0 +1,122 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/frankstop/f-ast/schemas/common-ast.schema.json",
+  "title": "CommonAST",
+  "type": "object",
+  "required": ["version", "language", "root", "diagnostics"],
+  "properties": {
+    "version": {
+      "const": "0.1"
+    },
+    "language": {
+      "enum": ["java", "csharp"]
+    },
+    "filePath": {
+      "type": "string"
+    },
+    "root": {
+      "$ref": "#/$defs/node"
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/diagnostic"
+      }
+    }
+  },
+  "$defs": {
+    "position": {
+      "type": "object",
+      "required": ["row", "column"],
+      "properties": {
+        "row": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "column": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "span": {
+      "type": "object",
+      "required": ["start", "end", "startIndex", "endIndex"],
+      "properties": {
+        "start": {
+          "$ref": "#/$defs/position"
+        },
+        "end": {
+          "$ref": "#/$defs/position"
+        },
+        "startIndex": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "endIndex": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "node": {
+      "type": "object",
+      "required": ["id", "kind", "language", "span", "children", "metadata"],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "kind": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "language": {
+          "enum": ["java", "csharp"]
+        },
+        "span": {
+          "$ref": "#/$defs/span"
+        },
+        "children": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/node"
+          }
+        },
+        "metadata": {
+          "type": "object"
+        }
+      },
+      "additionalProperties": false
+    },
+    "diagnostic": {
+      "type": "object",
+      "required": ["code", "message", "severity"],
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "severity": {
+          "enum": ["info", "warning", "error"]
+        },
+        "filePath": {
+          "type": "string"
+        },
+        "language": {
+          "enum": ["java", "csharp"]
+        },
+        "span": {
+          "$ref": "#/$defs/span"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

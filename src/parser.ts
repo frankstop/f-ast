@@ -3,7 +3,7 @@ import path from "node:path";
 import { buildHeuristicAst } from "./heuristic.js";
 import { detectLanguage, isSupportedSourcePath, languageDiagnostic } from "./language.js";
 import { buildSymbolGraph } from "./symbols.js";
-import { validateWithTreeSitter } from "./treeSitter.js";
+import { buildTreeSitterAst } from "./treeSitterAst.js";
 import type { AnalysisBundle, CommonAST, Diagnostic, ParseCodeOptions, ParsePathOptions } from "./types.js";
 
 export async function parseCode(input: string, options: ParseCodeOptions = {}): Promise<CommonAST> {
@@ -14,9 +14,13 @@ export async function parseCode(input: string, options: ParseCodeOptions = {}): 
 
   const diagnostics: Diagnostic[] = [];
   if (options.parserMode !== "heuristic") {
-    const treeSitter = validateWithTreeSitter(input, language, options.filePath);
+    const treeSitter = buildTreeSitterAst(input, language, options.filePath);
     diagnostics.push(...treeSitter.diagnostics);
-    if (options.parserMode === "tree-sitter" && !treeSitter.available) {
+    if (treeSitter.ast) {
+      return treeSitter.ast;
+    }
+
+    if (options.parserMode === "tree-sitter") {
       diagnostics.push({
         code: "parser.mode-unavailable",
         message: "Requested tree-sitter mode, but parser dependency was unavailable; emitted heuristic partial output.",
