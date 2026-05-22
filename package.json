@@ -1,6 +1,6 @@
 {
   "name": "@frankstop/f-ast",
-  "version": "0.7.0",
+  "version": "1.0.0",
   "description": "CommonAST and best-effort SymbolGraph parser for legacy Java and C# code.",
   "type": "module",
   "license": "MIT",
@@ -34,9 +34,13 @@
   ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
+    "prepack": "npm run build",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test": "vitest run",
     "test:smoke": "node test/smoke.mjs",
+    "pack:smoke": "node scripts/pack-smoke.mjs",
+    "check:release": "npm run check && npm run pack:smoke",
+    "release:dry-run": "npm run check:release && node scripts/release-dry-run.mjs",
     "check": "npm run typecheck && npm test && npm run build && npm run test:smoke"
   },
   "keywords": [
