@@ -47,8 +47,8 @@
     "static-analysis"
   ],
   "dependencies": {
-    "tree-sitter": "^0.22.4",
-    "tree-sitter-c-sharp": "^0.23.1",
+    "tree-sitter": "^0.21.1",
+    "tree-sitter-c-sharp": "0.21.3",
     "tree-sitter-java": "^0.23.5"
   },
   "devDependencies": {
