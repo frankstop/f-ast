@@ -1,6 +1,6 @@
 {
   "name": "@frankstop/f-ast",
-  "version": "0.1.0",
+  "version": "0.7.0",
   "description": "CommonAST and best-effort SymbolGraph parser for legacy Java and C# code.",
   "type": "module",
   "license": "MIT",
@@ -26,7 +26,9 @@
   },
   "files": [
     "bin",
+    "docs",
     "dist",
+    "schemas",
     "README.md",
     "LICENSE"
   ],

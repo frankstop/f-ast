@@ -93,6 +93,10 @@ export type SymbolGraph = {
   diagnostics: Diagnostic[];
 };
 
+export type BuildSymbolGraphOptions = {
+  unresolvedDiagnostics?: boolean;
+};
+
 export type AnalysisBundle = {
   asts: CommonAST[];
   symbolGraph: SymbolGraph;

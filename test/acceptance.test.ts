@@ -3,7 +3,7 @@ import { parsePath } from "../src/index.js";
 
 describe("acceptance: mixed legacy repo analysis", () => {
   it("parses Java and C# examples into expected AST, symbol graph, and diagnostics", async () => {
-    const bundle = await parsePath("examples/legacy-mixed", { parserMode: "heuristic" });
+    const bundle = await parsePath("examples/legacy-mixed");
     const declarationNames = bundle.symbolGraph.declarations.map((declaration) => declaration.name).sort();
     const referenceNames = bundle.symbolGraph.references.map((reference) => reference.name).sort();
     const resolvedReferenceNames = bundle.symbolGraph.references
@@ -11,12 +11,18 @@ describe("acceptance: mixed legacy repo analysis", () => {
       .map((reference) => reference.name)
       .sort();
     const unresolvedCallNames = bundle.symbolGraph.diagnostics
-      .filter((diagnostic) => diagnostic.code === "symbol.unresolved")
+      .filter((diagnostic) => diagnostic.code.startsWith("symbol.unresolved"))
       .map((diagnostic) => diagnostic.message.match(/'([^']+)'/)?.[1])
       .filter(Boolean)
       .sort();
+    const unresolvedCodes = bundle.symbolGraph.diagnostics.map((diagnostic) => diagnostic.code).sort();
+    const callContainers = bundle.symbolGraph.references
+      .filter((reference) => reference.name === "Audit" || reference.name === "audit")
+      .map((reference) => reference.container)
+      .sort();
 
     expect(bundle.asts.map((ast) => ast.language).sort()).toEqual(["csharp", "java"]);
+    expect(bundle.asts.map((ast) => ast.root.metadata.parser)).toEqual(["tree-sitter", "tree-sitter"]);
     expect(bundle.asts).toHaveLength(2);
     expect(bundle.diagnostics.every((diagnostic) => diagnostic.severity !== "error")).toBe(true);
 
@@ -36,31 +42,24 @@ describe("acceptance: mixed legacy repo analysis", () => {
 
     expect(referenceNames).toEqual([
       "Audit",
-      "Audit",
-      "CustomerService",
       "FindById",
-      "FindInvoice",
-      "InvoiceService",
       "WriteLine",
       "audit",
-      "audit",
       "findById",
-      "findCustomer",
       "getName",
       "println"
     ]);
 
-    expect(resolvedReferenceNames).toEqual([
-      "Audit",
-      "Audit",
-      "CustomerService",
-      "FindInvoice",
-      "InvoiceService",
-      "audit",
-      "audit",
-      "findCustomer"
-    ]);
+    expect(resolvedReferenceNames).toEqual(["Audit", "audit"]);
 
     expect(unresolvedCallNames).toEqual(["FindById", "WriteLine", "findById", "getName", "println"]);
+    expect(unresolvedCodes).toEqual([
+      "symbol.unresolved.external-api",
+      "symbol.unresolved.external-api",
+      "symbol.unresolved.member",
+      "symbol.unresolved.member",
+      "symbol.unresolved.member"
+    ]);
+    expect(callContainers).toEqual(["CustomerService.findCustomer", "InvoiceService.FindInvoice"]);
   });
 });

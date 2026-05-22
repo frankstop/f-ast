@@ -6,12 +6,13 @@ import type {
   Diagnostic,
   ReferenceKind,
   SymbolDeclaration,
+  BuildSymbolGraphOptions,
   SymbolGraph,
   SymbolLink,
   SymbolReference
 } from "./types.js";
 
-export function buildSymbolGraph(asts: CommonAST[]): SymbolGraph {
+export function buildSymbolGraph(asts: CommonAST[], options: BuildSymbolGraphOptions = {}): SymbolGraph {
   const declarations: SymbolDeclaration[] = [];
   const references: SymbolReference[] = [];
   const diagnostics: Diagnostic[] = [];
@@ -36,10 +37,11 @@ export function buildSymbolGraph(asts: CommonAST[]): SymbolGraph {
         referenceId: reference.id,
         confidence: local ? "exact-local" : "exact-project"
       });
-    } else if (reference.kind === "call") {
+    } else if (reference.kind === "call" && options.unresolvedDiagnostics !== false) {
+      const qualifier = typeof reference.metadata.qualifier === "string" ? reference.metadata.qualifier : undefined;
       diagnostics.push({
-        code: "symbol.unresolved",
-        message: `Unresolved call reference '${reference.name}'.`,
+        code: unresolvedCode(reference.name, qualifier),
+        message: `Unresolved call reference '${reference.name}'${qualifier ? ` on '${qualifier}'` : ""}.`,
         severity: "warning",
         language: reference.language,
         filePath: reference.filePath,
@@ -60,7 +62,7 @@ function visit(
 ): void {
   const declarationKind = node.metadata.declarationKind as DeclarationKind | undefined;
   const referenceKind = node.metadata.referenceKind as ReferenceKind | undefined;
-  const container = containerStack.at(-1);
+  const container = typeof node.metadata.container === "string" ? node.metadata.container : containerStack.at(-1);
 
   if (node.name && declarationKind) {
     declarations.push({
@@ -108,4 +110,12 @@ function indexDeclarations(declarations: SymbolDeclaration[]): Map<string, Symbo
     index.set(declaration.name, existing);
   }
   return index;
+}
+
+function unresolvedCode(name: string, qualifier: string | undefined): string {
+  if (!qualifier) return "symbol.unresolved.local";
+  if (qualifier === "System" || qualifier === "Console" || qualifier.startsWith("System.") || qualifier.startsWith("Console.")) {
+    return "symbol.unresolved.external-api";
+  }
+  return "symbol.unresolved.member";
 }
