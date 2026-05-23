@@ -64,7 +64,7 @@ try {
     // Keep the current smoke single-file until project loading expands.
   }
 
-  const cli = run(join(tempRoot, "node_modules", ".bin", "f-ast"), ["Smoke.java", "--symbols", "--compact"], {
+  const cli = run(join(tempRoot, "node_modules", ".bin", "f-ast"), ["Smoke.java", "--symbols", "--json"], {
     cwd: tempRoot
   });
   const graph = JSON.parse(cli.stdout);

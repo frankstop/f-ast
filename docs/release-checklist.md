@@ -32,11 +32,12 @@ npm run release:dry-run
   - run `f-ast`
   - parse Java/C# fixture input
 
-## V1.0 Gate
+## Current Version Gate
 
 - Changelog has current version section.
 - README status badge matches package version.
 - Known limitations are documented.
+- Compact output, MCP, type hints, and flow docs are present.
 - No P1/P2 bugs open.
 - Release tag points at green `main`.
 - `npm publish` is manual until release automation exists.

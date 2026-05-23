@@ -1,12 +1,14 @@
 import fs from "node:fs";
 import { describe, expect, it } from "vitest";
-import { buildSymbolGraph, parseCode, parsePath } from "../src/index.js";
+import { buildFlowGraph, buildSymbolGraph, inferProbableTypeHints, parseCode, parsePath } from "../src/index.js";
 
 describe("public API contract", () => {
   it("exports stable v1-target API functions", () => {
     expect(typeof parseCode).toBe("function");
     expect(typeof parsePath).toBe("function");
     expect(typeof buildSymbolGraph).toBe("function");
+    expect(typeof buildFlowGraph).toBe("function");
+    expect(typeof inferProbableTypeHints).toBe("function");
   });
 
   it("keeps package entrypoints and release files stable", () => {

@@ -3,30 +3,36 @@ import fs from "node:fs";
 const pkg = JSON.parse(fs.readFileSync("package.json", "utf8"));
 const readme = fs.readFileSync("README.md", "utf8");
 const changelog = fs.readFileSync("changelog.md", "utf8");
+const releaseNotes = `docs/release-notes-v${pkg.version}.md`;
 
 const requiredFiles = [
   "docs/common-ast.md",
   "docs/symbol-graph.md",
   "docs/diagnostics.md",
+  "docs/compact-output.md",
+  "docs/mcp-server.md",
+  "docs/type-hints.md",
+  "docs/flow-graph.md",
   "docs/release-checklist.md",
   "docs/v1-roadmap.md",
   "docs/known-limitations.md",
-  "docs/release-notes-v1.0.0.md",
+  releaseNotes,
   "schemas/common-ast.schema.json",
   "dist/src/index.js",
   "dist/src/index.d.ts"
 ];
 
-if (pkg.version !== "1.0.0") {
-  throw new Error(`Expected package version 1.0.0, got ${pkg.version}.`);
+if (!/^\d+\.\d+\.\d+$/.test(pkg.version)) {
+  throw new Error(`Expected semver package version, got ${pkg.version}.`);
 }
 
-if (!readme.includes("status-v1.0")) {
-  throw new Error("README status badge does not mention v1.0.");
+const statusMinor = `status-v${pkg.version.split(".").slice(0, 2).join(".")}`;
+if (!readme.includes(statusMinor)) {
+  throw new Error(`README status badge does not mention ${statusMinor}.`);
 }
 
-if (!changelog.includes("## 1.0.0")) {
-  throw new Error("changelog.md missing 1.0.0 section.");
+if (!changelog.includes(`## ${pkg.version}`)) {
+  throw new Error(`changelog.md missing ${pkg.version} section.`);
 }
 
 for (const file of requiredFiles) {
@@ -37,7 +43,7 @@ console.log(
   JSON.stringify(
     {
       version: pkg.version,
-      releaseNotes: "docs/release-notes-v1.0.0.md",
+      releaseNotes,
       filesChecked: requiredFiles.length,
       publish: "not performed"
     },

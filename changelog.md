@@ -2,6 +2,60 @@
 
 All notable project changes are recorded here cumulatively and sectioned by version.
 
+## 1.1.0
+
+### Added
+
+- Compact agent output is now the default CLI output.
+- Explicit output flags:
+  - `--json`
+  - `--yaml`
+  - `--format compact|json|yaml`
+- Output profiles:
+  - `agent`
+  - `full`
+  - `symbols`
+  - `diagnostics`
+- Local MCP server command:
+  - `f-ast mcp <path>`
+- MCP tools:
+  - `project_summary`
+  - `list_files`
+  - `get_symbols`
+  - `resolve_references`
+  - `get_ast_slice`
+  - `get_diagnostics`
+  - `search_symbols`
+- `ProbableTypeHint` with confidence, evidence, and span.
+- `FlowGraph` and `FlowEdge` for syntax-derived:
+  - `calls`
+  - `reads`
+  - `writes`
+  - `mutates`
+  - `returns`
+  - `branches`
+  - `loops`
+  - `dependsOn`
+- Docs:
+  - `docs/compact-output.md`
+  - `docs/mcp-server.md`
+  - `docs/type-hints.md`
+  - `docs/flow-graph.md`
+  - `docs/release-notes-v1.1.0.md`
+
+### Changed
+
+- `parsePath()` bundles now include `flowGraph` and `typeHints`.
+- README now centers compact default, MCP context retrieval, flow scope, and type-hint caveats.
+- Release dry-run now checks docs/status against package version dynamically.
+- Version is now `1.1.0`.
+
+### Validation
+
+- Target local gate:
+  - `npm run check`
+  - `npm run release:dry-run`
+
 ## 1.0.0
 
 ### Added

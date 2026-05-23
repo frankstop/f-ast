@@ -1,18 +1,23 @@
 import fs from "node:fs/promises";
+import { formatBundle, toYaml, type OutputFormat, type OutputProfile } from "./formatters.js";
+import { startMcpServer } from "./mcp.js";
 import { parsePath } from "./parser.js";
 
 type CliOptions = {
   astOnly: boolean;
-  symbolsOnly: boolean;
   noSymbols: boolean;
-  diagnosticsOnly: boolean;
   pretty: boolean;
-  format: "json";
+  format: OutputFormat;
+  profile: OutputProfile;
   out?: string;
   parserMode?: "auto" | "tree-sitter" | "heuristic";
 };
 
 export async function runCli(argv: string[] = process.argv.slice(2)): Promise<number> {
+  if (argv[0] === "mcp") {
+    return runMcp(argv.slice(1));
+  }
+
   const parsed = parseArgs(argv);
   if (parsed.help) {
     console.log(helpText());
@@ -31,26 +36,43 @@ export async function runCli(argv: string[] = process.argv.slice(2)): Promise<nu
   }
 
   const bundle = await parsePath(parsed.targetPath, parsed.options);
-  const output = selectOutput(bundle, parsed.options);
-  const json = `${JSON.stringify(output, null, parsed.options.pretty ? 2 : 0)}\n`;
+  const output = formatCliOutput(bundle, parsed.options);
 
   if (parsed.options.out) {
-    await fs.writeFile(parsed.options.out, json, "utf8");
+    await fs.writeFile(parsed.options.out, output, "utf8");
   } else {
-    process.stdout.write(json);
+    process.stdout.write(output);
   }
 
   return bundle.diagnostics.some((diagnostic) => diagnostic.severity === "error") ? 1 : 0;
 }
 
+async function runMcp(argv: string[]): Promise<number> {
+  const parsed = parseArgs(argv);
+  if (parsed.help) {
+    console.log(mcpHelpText());
+    return 0;
+  }
+  if (parsed.error) {
+    console.error(parsed.error);
+    console.error("Run `f-ast mcp --help`.");
+    return 2;
+  }
+  if (!parsed.targetPath) {
+    console.error("Missing path. Run `f-ast mcp --help`.");
+    return 2;
+  }
+  await startMcpServer(parsed.targetPath, { parserMode: parsed.options.parserMode });
+  return 0;
+}
+
 function parseArgs(argv: string[]): { help: boolean; targetPath?: string; options: CliOptions; error?: string } {
   const options: CliOptions = {
     astOnly: false,
-    symbolsOnly: false,
     noSymbols: false,
-    diagnosticsOnly: false,
     pretty: true,
-    format: "json",
+    format: "compact",
+    profile: "agent",
     parserMode: "auto"
   };
   let targetPath: string | undefined;
@@ -67,7 +89,7 @@ function parseArgs(argv: string[]): { help: boolean; targetPath?: string; option
       continue;
     }
     if (arg === "--symbols") {
-      options.symbolsOnly = true;
+      options.profile = "symbols";
       continue;
     }
     if (arg === "--no-symbols") {
@@ -75,7 +97,15 @@ function parseArgs(argv: string[]): { help: boolean; targetPath?: string; option
       continue;
     }
     if (arg === "--diagnostics") {
-      options.diagnosticsOnly = true;
+      options.profile = "diagnostics";
+      continue;
+    }
+    if (arg === "--json") {
+      options.format = "json";
+      continue;
+    }
+    if (arg === "--yaml") {
+      options.format = "yaml";
       continue;
     }
     if (arg === "--pretty") {
@@ -83,15 +113,30 @@ function parseArgs(argv: string[]): { help: boolean; targetPath?: string; option
       continue;
     }
     if (arg === "--compact") {
+      options.format = "compact";
       options.pretty = false;
       continue;
     }
     if (arg === "--format") {
       const format = argv[index + 1];
-      if (format !== "json") {
-        return { help: false, targetPath, options, error: `Unsupported format '${format ?? ""}'. Only json is supported.` };
+      if (format !== "compact" && format !== "json" && format !== "yaml") {
+        return { help: false, targetPath, options, error: `Unsupported format '${format ?? ""}'. Expected compact, json, or yaml.` };
       }
       options.format = format;
+      index += 1;
+      continue;
+    }
+    if (arg === "--profile") {
+      const profile = argv[index + 1];
+      if (profile !== "agent" && profile !== "full" && profile !== "symbols" && profile !== "diagnostics") {
+        return {
+          help: false,
+          targetPath,
+          options,
+          error: `Unsupported profile '${profile ?? ""}'. Expected agent, full, symbols, or diagnostics.`
+        };
+      }
+      options.profile = profile;
       index += 1;
       continue;
     }
@@ -120,40 +165,60 @@ function parseArgs(argv: string[]): { help: boolean; targetPath?: string; option
     }
   }
 
-  const outputModeCount = [options.astOnly, options.symbolsOnly, options.noSymbols, options.diagnosticsOnly].filter(Boolean).length;
+  const outputModeCount = [options.astOnly, options.noSymbols, options.profile === "symbols", options.profile === "diagnostics"].filter(Boolean).length;
   if (outputModeCount > 1) {
-    return { help: false, targetPath, options, error: "Choose only one output mode: --ast, --symbols, --no-symbols, or --diagnostics." };
+    return { help: false, targetPath, options, error: "Choose only one output mode/profile: --ast, --symbols, --no-symbols, --diagnostics, or --profile." };
   }
 
   return { help: false, targetPath, options };
 }
 
-function selectOutput(bundle: Awaited<ReturnType<typeof parsePath>>, options: CliOptions): unknown {
-  if (options.astOnly) return bundle.asts;
-  if (options.symbolsOnly) return bundle.symbolGraph;
-  if (options.noSymbols) return { asts: bundle.asts, diagnostics: bundle.diagnostics };
-  if (options.diagnosticsOnly) return bundle.diagnostics;
-  return bundle;
+function formatCliOutput(bundle: Awaited<ReturnType<typeof parsePath>>, options: CliOptions): string {
+  if (!options.astOnly && !options.noSymbols) {
+    return formatBundle(bundle, options.format, options.profile, options.pretty);
+  }
+
+  const selected = options.astOnly
+    ? bundle.asts
+    : { asts: bundle.asts, flowGraph: bundle.flowGraph, typeHints: bundle.typeHints, diagnostics: bundle.diagnostics };
+
+  if (options.format === "json") return `${JSON.stringify(selected, null, options.pretty ? 2 : 0)}\n`;
+  if (options.format === "yaml") return `${toYaml(selected)}\n`;
+  return formatBundle(bundle, "compact", "full", options.pretty);
 }
 
 function helpText(): string {
   return `f-ast
 
-Parse legacy Java/C# into CommonAST and best-effort SymbolGraph JSON.
+Parse legacy Java/C# into compact agent maps, CommonAST, SymbolGraph, FlowGraph, and probable type hints.
 
 Usage:
-  f-ast <file-or-directory> [--ast | --symbols | --no-symbols | --diagnostics] [--out file]
+  f-ast <file-or-directory> [--profile agent|full|symbols|diagnostics] [--json | --yaml | --format compact|json|yaml]
+  f-ast mcp <file-or-directory>
 
 Options:
   --ast                         Output CommonAST array only
   --symbols                     Output SymbolGraph only
   --no-symbols                  Output ASTs and diagnostics without SymbolGraph
   --diagnostics                 Output diagnostics only
-  --out <file>                  Write JSON to file
-  --format <format>             Output format: json
-  --pretty                      Pretty-print JSON (default)
-  --compact                     Compact JSON
+  --profile <profile>           agent (default), full, symbols, or diagnostics
+  --json                        Output JSON
+  --yaml                        Output YAML
+  --format <format>             compact (default), json, or yaml
+  --out <file>                  Write output to file
+  --pretty                      Pretty-print JSON/YAML-compatible data (default)
+  --compact                     Output compact agent map
   --parser-mode <mode>          auto, tree-sitter, or heuristic
   -h, --help                    Show help
+`;
+}
+
+function mcpHelpText(): string {
+  return `f-ast mcp
+
+Start local MCP server over stdio for dynamic codebase queries.
+
+Usage:
+  f-ast mcp <file-or-directory> [--parser-mode auto|tree-sitter|heuristic]
 `;
 }

@@ -14,12 +14,27 @@ if (result.status !== 0) {
   throw new Error(`f-ast exited ${result.status}: ${result.stderr}`);
 }
 
-const bundle = JSON.parse(result.stdout);
+if (!result.stdout.startsWith("project files=2") || !result.stdout.includes("edge calls")) {
+  throw new Error("Expected default compact agent output.");
+}
+
+const jsonResult = spawnSync(process.execPath, ["bin/f-ast.js", "examples/legacy-mixed", "--json", "--profile", "full"], {
+  encoding: "utf8"
+});
+
+if (jsonResult.status !== 0) {
+  throw new Error(`f-ast --json exited ${jsonResult.status}: ${jsonResult.stderr}`);
+}
+
+const bundle = JSON.parse(jsonResult.stdout);
 if (!Array.isArray(bundle.asts) || bundle.asts.length !== 2) {
   throw new Error("Expected two ASTs from examples/legacy-mixed.");
 }
+if (!bundle.flowGraph?.edges?.length || !Array.isArray(bundle.typeHints)) {
+  throw new Error("Expected flowGraph and typeHints in full JSON output.");
+}
 
-const diagnosticsResult = spawnSync(process.execPath, ["bin/f-ast.js", "examples/legacy-mixed", "--diagnostics"], {
+const diagnosticsResult = spawnSync(process.execPath, ["bin/f-ast.js", "examples/legacy-mixed", "--diagnostics", "--json"], {
   encoding: "utf8"
 });
 
@@ -32,11 +47,11 @@ if (!Array.isArray(diagnostics) || diagnostics.some((diagnostic) => diagnostic.s
   throw new Error("Expected diagnostics-only output with no errors.");
 }
 
-const compactResult = spawnSync(process.execPath, ["bin/f-ast.js", "examples/legacy-mixed", "--symbols", "--compact"], {
+const compactResult = spawnSync(process.execPath, ["bin/f-ast.js", "examples/legacy-mixed", "--symbols"], {
   encoding: "utf8"
 });
 
-if (compactResult.status !== 0 || compactResult.stdout.includes("\n  ")) {
+if (compactResult.status !== 0 || !compactResult.stdout.startsWith("symbols decls=")) {
   throw new Error("Expected compact symbol output with status 0.");
 }
 

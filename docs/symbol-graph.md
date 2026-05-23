@@ -13,7 +13,7 @@ type SymbolGraph = {
 
 ## Declarations
 
-V0.7 extracts:
+Current extraction includes:
 
 - imports/usings
 - classes, interfaces, enums
@@ -22,7 +22,7 @@ V0.7 extracts:
 
 ## References
 
-V0.7 extracts actual call sites from tree-sitter invocation nodes. Declarations are not counted as call references.
+Current extraction includes actual call sites from tree-sitter invocation nodes. Declarations are not counted as call references.
 
 ## Links
 
@@ -35,4 +35,4 @@ Confidence values:
 
 ## Limits
 
-V0.7 does not do compiler-grade type semantics, overload resolution, or build-system-aware project loading. External API calls and unresolved member calls remain visible as diagnostics.
+`f-ast` does not do compiler-grade type semantics, overload resolution, or build-system-aware project loading. External API calls and unresolved member calls remain visible as diagnostics. See `docs/type-hints.md` for syntax-derived probable hints.
