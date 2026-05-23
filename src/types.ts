@@ -97,8 +97,52 @@ export type BuildSymbolGraphOptions = {
   unresolvedDiagnostics?: boolean;
 };
 
+export type ProbableTypeHintKind = "collection-ish" | "iterable-ish" | "object-shape";
+
+export type ProbableTypeHint = {
+  id: string;
+  kind: ProbableTypeHintKind;
+  target: string;
+  language: Language;
+  filePath?: string;
+  confidence: "low" | "medium";
+  evidence: string;
+  span?: SourceSpan;
+  metadata: Record<string, unknown>;
+};
+
+export type FlowEdgeKind =
+  | "calls"
+  | "reads"
+  | "writes"
+  | "mutates"
+  | "returns"
+  | "branches"
+  | "loops"
+  | "dependsOn";
+
+export type FlowEdge = {
+  id: string;
+  kind: FlowEdgeKind;
+  from?: string;
+  to?: string;
+  language: Language;
+  filePath?: string;
+  nodeId?: string;
+  span?: SourceSpan;
+  evidence: string;
+  metadata: Record<string, unknown>;
+};
+
+export type FlowGraph = {
+  edges: FlowEdge[];
+  diagnostics: Diagnostic[];
+};
+
 export type AnalysisBundle = {
   asts: CommonAST[];
   symbolGraph: SymbolGraph;
+  flowGraph: FlowGraph;
+  typeHints: ProbableTypeHint[];
   diagnostics: Diagnostic[];
 };

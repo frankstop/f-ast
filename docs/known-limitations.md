@@ -1,6 +1,6 @@
 # Known Limitations
 
-These are intentional limits before v1.0.
+These are current intentional limits.
 
 ## Parser Scope
 
@@ -13,6 +13,7 @@ These are intentional limits before v1.0.
 - Symbol links use conservative exact-name matching.
 - Local file matches win over project-wide matches.
 - No compiler-grade type inference.
+- Probable type hints are syntax-derived clues, not compiler truth.
 - No overload resolution.
 - External API calls remain diagnostics.
 
@@ -20,7 +21,12 @@ These are intentional limits before v1.0.
 
 - `f-ast` accepts files and directories.
 - It does not yet read `.sln`, `.csproj`, Maven, or Gradle project models.
-- Build-system references and dependency graphs are outside v1.0 scope.
+- Build-system references and dependency graphs are outside current scope.
+
+## MCP Server
+
+- MCP project cache is per process.
+- Source file changes require restarting `f-ast mcp`.
 
 ## Corpus Confidence
 

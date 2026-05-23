@@ -1,9 +1,11 @@
 import fs from "node:fs/promises";
 import path from "node:path";
+import { buildFlowGraph } from "./flow.js";
 import { buildHeuristicAst } from "./heuristic.js";
 import { detectLanguage, isSupportedSourcePath, languageDiagnostic } from "./language.js";
 import { buildSymbolGraph } from "./symbols.js";
 import { buildTreeSitterAst } from "./treeSitterAst.js";
+import { inferProbableTypeHints } from "./typeHints.js";
 import type { AnalysisBundle, CommonAST, Diagnostic, ParseCodeOptions, ParsePathOptions } from "./types.js";
 
 export async function parseCode(input: string, options: ParseCodeOptions = {}): Promise<CommonAST> {
@@ -37,11 +39,13 @@ export async function parseCode(input: string, options: ParseCodeOptions = {}): 
 export async function parsePath(targetPath: string, options: ParsePathOptions = {}): Promise<AnalysisBundle> {
   const diagnostics: Diagnostic[] = [];
   const asts: CommonAST[] = [];
+  const sources = new Map<string, string>();
   const files = await collectSourceFiles(targetPath, diagnostics);
 
   for (const filePath of files) {
     try {
       const source = await fs.readFile(filePath, "utf8");
+      sources.set(filePath, source);
       const ast = await parseCode(source, {
         language: detectLanguage(filePath, source),
         filePath,
@@ -60,8 +64,11 @@ export async function parsePath(targetPath: string, options: ParsePathOptions = 
   }
 
   const symbolGraph = buildSymbolGraph(asts);
+  const flowGraph = buildFlowGraph(asts, symbolGraph, sources);
+  const typeHints = inferProbableTypeHints(asts, symbolGraph, sources);
   diagnostics.push(...symbolGraph.diagnostics);
-  return { asts, symbolGraph, diagnostics };
+  diagnostics.push(...flowGraph.diagnostics);
+  return { asts, symbolGraph, flowGraph, typeHints, diagnostics };
 }
 
 async function collectSourceFiles(targetPath: string, diagnostics: Diagnostic[]): Promise<string[]> {
