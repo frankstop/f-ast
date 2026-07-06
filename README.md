@@ -5,10 +5,13 @@
 [![Node](https://img.shields.io/badge/node-%3E%3D20-brightgreen.svg)](package.json)
 [![Status](https://img.shields.io/badge/status-v1.1%20agent--context%20tool-blue.svg)](https://github.com/frankstop/f-ast)
 
-`f-ast` is an agent context tool for legacy Java 6–8 and C# 5–7. It turns source
-files into compact structural maps: hierarchical `CommonAST`, a best-effort
-`SymbolGraph`, syntax-derived flow edges, probable type hints, and explicit
-diagnostics.
+Agent context tool that turns legacy Java and C# into compact structural maps
+with explicit uncertainty.
+
+`f-ast` currently targets Java 6–8 and C# 5–7.
+
+The maps include hierarchical `CommonAST`, a best-effort `SymbolGraph`,
+syntax-derived flow edges, probable type hints, and diagnostics.
 
 Normal parsing uses Tree-sitter. A masked regex normalizer provides degraded
 fallback output when the native parser is unavailable. The results are useful
@@ -71,7 +74,7 @@ npm test
 Current repository version: `v1.1`.
 
 - Public repository: `frankstop/f-ast`
-- Package name reserved in source: `@frankstop/f-ast`
+- Package identifier in source: `@frankstop/f-ast`
 - CLI binary name: `f-ast`
 - CI gate: typecheck, tests, build, and smoke test
 - Default parser: Tree-sitter
@@ -80,7 +83,7 @@ Current repository version: `v1.1`.
 - Outputs: compact text, JSON, YAML, or local MCP responses
 
 The package is not published to the npm registry. Use the repository setup
-below rather than `npm install @frankstop/f-ast`.
+below.
 
 ## Local setup
 
@@ -122,6 +125,8 @@ Output profiles:
 - `diagnostics`: diagnostics only
 
 ## Library usage
+
+After installing the repository or generated tarball as a local dependency:
 
 ```ts
 import { buildSymbolGraph, parseCode, parsePath } from "@frankstop/f-ast";

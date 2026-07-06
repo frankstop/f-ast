@@ -187,10 +187,10 @@ function formatCliOutput(bundle: Awaited<ReturnType<typeof parsePath>>, options:
   return formatBundle(bundle, "compact", "full", options.pretty);
 }
 
-function helpText(): string {
+export function helpText(): string {
   return `f-ast
 
-Parse legacy Java/C# into compact agent maps, CommonAST, SymbolGraph, FlowGraph, and probable type hints.
+Agent context tool that turns legacy Java and C# into compact structural maps with explicit uncertainty.
 
 Usage:
   f-ast <file-or-directory> [--profile agent|full|symbols|diagnostics] [--json | --yaml | --format compact|json|yaml]
@@ -213,10 +213,10 @@ Options:
 `;
 }
 
-function mcpHelpText(): string {
+export function mcpHelpText(): string {
   return `f-ast mcp
 
-Start local MCP server over stdio for dynamic codebase queries.
+Serve targeted structural context to AI agents over a local stdio MCP server.
 
 Usage:
   f-ast mcp <file-or-directory> [--parser-mode auto|tree-sitter|heuristic]

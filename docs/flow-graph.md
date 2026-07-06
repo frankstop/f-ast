@@ -1,7 +1,7 @@
 # FlowGraph
 
-`FlowGraph` adds lightweight execution-shape edges over CommonAST and
-SymbolGraph output.
+`FlowGraph` adds lightweight execution-shape clues to the structural context
+produced by `f-ast`.
 
 It is syntax-derived only. It does not do compiler-grade data-flow analysis,
 type resolution, overload resolution, or full control-flow graph construction.

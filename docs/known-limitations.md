@@ -2,7 +2,7 @@
 
 These are current intentional limits.
 
-## Parser Scope
+## Parsing Implementation
 
 - Java and C# parsing is syntax-first.
 - Tree-sitter provides source structure, not compiler semantics.

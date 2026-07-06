@@ -1,7 +1,7 @@
 # Compact Output
 
-`f-ast` defaults to compact output because AI agents usually need a structural
-map before they need full JSON.
+The `f-ast` agent context tool defaults to compact output because agents usually
+need a structural map before full JSON.
 
 ```bash
 f-ast examples/legacy-mixed

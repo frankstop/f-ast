@@ -18,6 +18,8 @@ All notable project changes are recorded here cumulatively and sectioned by vers
 - CommonAST contract and schema version are now `0.2`.
 - Compact formatting recursively includes nested nodes.
 - The README now presents `f-ast` as an agent context tool and documents repository-only setup.
+- Package metadata, CLI help, component docs, and release notes now use the same
+  agent-context positioning.
 
 ## 1.1.0
 

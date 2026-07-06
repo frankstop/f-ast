@@ -1,8 +1,10 @@
 # MCP Server
 
-`f-ast mcp <path>` starts a local Model Context Protocol server over stdio.
-It parses the target once per process and serves cached project slices through
-tools.
+`f-ast mcp <path>` serves targeted structural context to AI agents through a
+local Model Context Protocol server over stdio.
+
+It analyzes the target once per process and serves cached project slices
+through tools.
 
 ```bash
 f-ast mcp examples/legacy-mixed
