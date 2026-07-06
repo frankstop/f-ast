@@ -29,7 +29,9 @@ describe("acceptance: mixed legacy repo analysis", () => {
     expect(declarationNames).toEqual([
       "Audit",
       "CustomerService",
+      "CustomerService",
       "FindInvoice",
+      "InvoiceService",
       "InvoiceService",
       "System",
       "System.Collections.Generic",

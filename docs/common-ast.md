@@ -6,7 +6,7 @@ Every parsed Java or C# file becomes:
 
 ```ts
 type CommonAST = {
-  version: "0.1";
+  version: "0.2";
   language: "java" | "csharp";
   filePath?: string;
   root: CommonASTNode;
@@ -28,17 +28,29 @@ type CommonASTNode = {
 };
 ```
 
-## V0.7 Node Kinds
+## Node Kinds
 
 - `compilationUnit`
 - `import`
 - `type`
 - `field`
+- `property`
+- `constructor`
 - `method`
 - `call`
 
-`metadata.sourceNodeType` preserves the original tree-sitter node type. `metadata.parser` on the root is `tree-sitter` in normal mode and `heuristic-normalizer` only when degraded fallback is used.
+`children` is structural in version `0.2`: types contain nested types and members,
+while methods, constructors, and properties contain their mapped calls.
+
+`span` identifies the declaration or reference name. Declarations also include
+their full source range in `metadata.declarationSpan`.
+
+`metadata.sourceNodeType` preserves the original tree-sitter node type.
+`metadata.container` preserves the qualified parent path. `metadata.parser` on
+the root is `tree-sitter` in normal mode and `heuristic-normalizer` only when
+degraded fallback is used.
 
 ## Compatibility
 
-The JSON schema lives at `schemas/common-ast.schema.json`. Until v1.0, schema version remains `0.1` while the project hardens behavior around this shape.
+The JSON schema lives at `schemas/common-ast.schema.json`. Version `0.2` marks
+the change from a flat mapped-node list to meaningful parent-child hierarchy.

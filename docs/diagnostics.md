@@ -24,6 +24,7 @@ type Diagnostic = {
 - `parser.syntax-error`: tree-sitter parsed source with syntax errors
 - `parser.tree-sitter-unavailable`: native parser unavailable, heuristic fallback used
 - `parser.mode-unavailable`: tree-sitter mode requested but unavailable
+- `parser.heuristic-unbalanced-braces`: degraded heuristic output reached end of file before a declaration body closed
 - `language.unknown`: file language could not be inferred
 - `input.unsupported-file`: unsupported file extension
 - `input.unsupported-path`: unsupported input path type

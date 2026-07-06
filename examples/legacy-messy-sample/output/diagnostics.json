@@ -1,0 +1,187 @@
+[
+  {
+    "code": "parser.syntax-error",
+    "message": "tree-sitter parsed source with syntax errors; CommonAST emitted as partial output.",
+    "severity": "warning",
+    "language": "csharp",
+    "filePath": "examples/legacy-messy-sample/csharp/BrokenLegacyJob.cs"
+  },
+  {
+    "code": "parser.syntax-error",
+    "message": "tree-sitter parsed source with syntax errors; CommonAST emitted as partial output.",
+    "severity": "warning",
+    "language": "java",
+    "filePath": "examples/legacy-messy-sample/java/BrokenLegacyJob.java"
+  },
+  {
+    "code": "symbol.unresolved.member",
+    "message": "Unresolved call reference 'Process' on 'queue'.",
+    "severity": "warning",
+    "language": "csharp",
+    "filePath": "examples/legacy-messy-sample/csharp/BrokenLegacyJob.cs",
+    "span": {
+      "start": {
+        "row": 6,
+        "column": 18
+      },
+      "end": {
+        "row": 6,
+        "column": 25
+      },
+      "startIndex": 118,
+      "endIndex": 125
+    }
+  },
+  {
+    "code": "symbol.unresolved.member",
+    "message": "Unresolved call reference 'FindById' on 'repository'.",
+    "severity": "warning",
+    "language": "csharp",
+    "filePath": "examples/legacy-messy-sample/csharp/LegacyInvoiceService.cs",
+    "span": {
+      "start": {
+        "row": 31,
+        "column": 30
+      },
+      "end": {
+        "row": 31,
+        "column": 38
+      },
+      "startIndex": 883,
+      "endIndex": 891
+    }
+  },
+  {
+    "code": "symbol.unresolved.member",
+    "message": "Unresolved call reference 'FindLegacy' on 'repository'.",
+    "severity": "warning",
+    "language": "csharp",
+    "filePath": "examples/legacy-messy-sample/csharp/LegacyInvoiceService.cs",
+    "span": {
+      "start": {
+        "row": 37,
+        "column": 30
+      },
+      "end": {
+        "row": 37,
+        "column": 40
+      },
+      "startIndex": 1031,
+      "endIndex": 1041
+    }
+  },
+  {
+    "code": "symbol.unresolved.external-api",
+    "message": "Unresolved call reference 'WriteLine' on 'Console'.",
+    "severity": "warning",
+    "language": "csharp",
+    "filePath": "examples/legacy-messy-sample/csharp/LegacyInvoiceService.cs",
+    "span": {
+      "start": {
+        "row": 42,
+        "column": 20
+      },
+      "end": {
+        "row": 42,
+        "column": 29
+      },
+      "startIndex": 1137,
+      "endIndex": 1146
+    }
+  },
+  {
+    "code": "symbol.unresolved.member",
+    "message": "Unresolved call reference 'process' on 'queue'.",
+    "severity": "warning",
+    "language": "java",
+    "filePath": "examples/legacy-messy-sample/java/BrokenLegacyJob.java",
+    "span": {
+      "start": {
+        "row": 4,
+        "column": 14
+      },
+      "end": {
+        "row": 4,
+        "column": 21
+      },
+      "startIndex": 92,
+      "endIndex": 99
+    }
+  },
+  {
+    "code": "symbol.unresolved.member",
+    "message": "Unresolved call reference 'size' on 'queue'.",
+    "severity": "warning",
+    "language": "java",
+    "filePath": "examples/legacy-messy-sample/java/BrokenLegacyJob.java",
+    "span": {
+      "start": {
+        "row": 5,
+        "column": 18
+      },
+      "end": {
+        "row": 5,
+        "column": 22
+      },
+      "startIndex": 121,
+      "endIndex": 125
+    }
+  },
+  {
+    "code": "symbol.unresolved.member",
+    "message": "Unresolved call reference 'findById' on 'repository'.",
+    "severity": "warning",
+    "language": "java",
+    "filePath": "examples/legacy-messy-sample/java/LegacyCustomerService.java",
+    "span": {
+      "start": {
+        "row": 16,
+        "column": 26
+      },
+      "end": {
+        "row": 16,
+        "column": 34
+      },
+      "startIndex": 503,
+      "endIndex": 511
+    }
+  },
+  {
+    "code": "symbol.unresolved.member",
+    "message": "Unresolved call reference 'findLegacy' on 'repository'.",
+    "severity": "warning",
+    "language": "java",
+    "filePath": "examples/legacy-messy-sample/java/LegacyCustomerService.java",
+    "span": {
+      "start": {
+        "row": 21,
+        "column": 26
+      },
+      "end": {
+        "row": 21,
+        "column": 36
+      },
+      "startIndex": 628,
+      "endIndex": 638
+    }
+  },
+  {
+    "code": "symbol.unresolved.external-api",
+    "message": "Unresolved call reference 'println' on 'System.out'.",
+    "severity": "warning",
+    "language": "java",
+    "filePath": "examples/legacy-messy-sample/java/LegacyCustomerService.java",
+    "span": {
+      "start": {
+        "row": 25,
+        "column": 19
+      },
+      "end": {
+        "row": 25,
+        "column": 26
+      },
+      "startIndex": 717,
+      "endIndex": 724
+    }
+  }
+]

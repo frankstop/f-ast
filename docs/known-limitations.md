@@ -7,6 +7,9 @@ These are current intentional limits.
 - Java and C# parsing is syntax-first.
 - Tree-sitter provides source structure, not compiler semantics.
 - Heuristic parsing exists only as degraded fallback when native parser packages are unavailable.
+- The heuristic normalizer masks comments and literals and estimates hierarchy
+  with brace ranges; malformed or unusual syntax can still produce incomplete
+  structure.
 
 ## Symbol Resolution
 
@@ -31,4 +34,6 @@ These are current intentional limits.
 ## Corpus Confidence
 
 - The built-in acceptance corpus is intentionally small.
+- `examples/legacy-messy-sample` is a committed hostile demo with expected
+  CommonAST, SymbolGraph, and diagnostic output.
 - Larger external corpus runs are supported through `AST_OSS_CORPUS`, but no external corpus is vendored.

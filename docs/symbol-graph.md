@@ -18,6 +18,8 @@ Current extraction includes:
 - imports/usings
 - classes, interfaces, enums
 - fields
+- C# properties
+- Java and C# constructors
 - methods
 
 ## References

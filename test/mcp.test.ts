@@ -7,7 +7,7 @@ describe("MCP server project tools", () => {
 
     expect(project.callTool("project_summary")).toMatchObject({
       files: 2,
-      declarations: 11,
+      declarations: 13,
       references: 7
     });
 

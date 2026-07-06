@@ -2,6 +2,23 @@
 
 All notable project changes are recorded here cumulatively and sectioned by version.
 
+## Unreleased
+
+### Added
+
+- Hierarchical CommonAST output for Tree-sitter and heuristic parsing.
+- Java and C# constructor declarations.
+- C# property declarations.
+- Length-preserving comment and literal masking for heuristic, flow, and type-hint regexes.
+- Hostile legacy demo corpus with reproducible CommonAST, SymbolGraph, and diagnostic snapshots.
+- Focused regression fixtures for comments, strings, nesting, constructors, properties, malformed input, and empty files.
+
+### Changed
+
+- CommonAST contract and schema version are now `0.2`.
+- Compact formatting recursively includes nested nodes.
+- The README now presents `f-ast` as an agent context tool and documents repository-only setup.
+
 ## 1.1.0
 
 ### Added
