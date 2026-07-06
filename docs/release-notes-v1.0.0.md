@@ -1,6 +1,10 @@
 # f-ast v1.0.0 Release Notes
 
-`f-ast` is a syntax-first parser toolkit for legacy Java 6-8 and C# 5-7. It emits stable CommonAST JSON and a best-effort SymbolGraph for downstream static analysis.
+`f-ast` is an agent context tool that turns legacy Java and C# into compact
+structural maps with explicit uncertainty.
+
+Version 1.0 established the Tree-sitter parsing core, CommonAST JSON, and a
+best-effort SymbolGraph used by that context layer.
 
 ## Highlights
 
@@ -11,11 +15,15 @@
 - JSON schema and docs for CommonAST, SymbolGraph, diagnostics, release process, roadmap, and limitations.
 - Protected main branch with CI gate.
 
-## Install
+## Local setup
 
 ```bash
-npm install @frankstop/f-ast
+git clone https://github.com/frankstop/f-ast.git
+cd f-ast
+npm ci
 ```
+
+The package is not published to the npm registry.
 
 ## Verify
 

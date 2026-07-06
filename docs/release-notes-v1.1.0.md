@@ -1,6 +1,9 @@
 # f-ast v1.1.0 Release Notes
 
-v1.1.0 shifts `f-ast` toward agent-native codebase context.
+`f-ast` is an agent context tool that turns legacy Java and C# into compact
+structural maps with explicit uncertainty.
+
+Version 1.1 made that context easier for agents to retrieve and consume.
 
 ## Highlights
 
@@ -18,4 +21,5 @@ npm run check
 npm run release:dry-run
 ```
 
-Release still uses protected PR flow. Publishing remains manual.
+Release still uses protected PR flow. No npm registry publication was
+performed.

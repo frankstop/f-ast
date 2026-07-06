@@ -1,7 +1,7 @@
 {
   "name": "@frankstop/f-ast",
   "version": "1.1.0",
-  "description": "CommonAST and best-effort SymbolGraph parser for legacy Java and C# code.",
+  "description": "Agent context tool that turns legacy Java and C# into compact structural maps with explicit uncertainty.",
   "type": "module",
   "license": "MIT",
   "author": "Frank Valdez",
@@ -48,6 +48,8 @@
     "ast",
     "parser",
     "tree-sitter",
+    "agent-context",
+    "code-understanding",
     "java",
     "csharp",
     "legacy-code",

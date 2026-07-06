@@ -1,6 +1,6 @@
 # CommonAST
 
-CommonAST is the stable syntax contract for `f-ast`.
+CommonAST is the structural output contract for the `f-ast` agent context tool.
 
 Every parsed Java or C# file becomes:
 
