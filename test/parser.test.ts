@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { parseCode, parsePath } from "../src/index.js";
+import type { CommonASTNode } from "../src/types.js";
 
 describe("parseCode", () => {
   it("normalizes Java declarations and calls into CommonAST", async () => {
@@ -17,9 +18,10 @@ describe("parseCode", () => {
 
     expect(ast.language).toBe("java");
     expect(ast.root.kind).toBe("compilationUnit");
-    expect(ast.root.children.map((node) => [node.kind, node.name])).toContainEqual(["type", "OrderService"]);
-    expect(ast.root.children.map((node) => [node.kind, node.name])).toContainEqual(["method", "load"]);
-    expect(ast.root.children.map((node) => [node.kind, node.name])).toContainEqual(["call", "findById"]);
+    const nodes = flatten(ast.root);
+    expect(nodes.map((node) => [node.kind, node.name])).toContainEqual(["type", "OrderService"]);
+    expect(nodes.map((node) => [node.kind, node.name])).toContainEqual(["method", "load"]);
+    expect(nodes.map((node) => [node.kind, node.name])).toContainEqual(["call", "findById"]);
   });
 
   it("normalizes C# declarations and calls into CommonAST", async () => {
@@ -36,11 +38,16 @@ describe("parseCode", () => {
     );
 
     expect(ast.language).toBe("csharp");
-    expect(ast.root.children.map((node) => [node.kind, node.name])).toContainEqual(["type", "PaymentService"]);
-    expect(ast.root.children.map((node) => [node.kind, node.name])).toContainEqual(["method", "Load"]);
-    expect(ast.root.children.map((node) => [node.kind, node.name])).toContainEqual(["call", "FindById"]);
+    const nodes = flatten(ast.root);
+    expect(nodes.map((node) => [node.kind, node.name])).toContainEqual(["type", "PaymentService"]);
+    expect(nodes.map((node) => [node.kind, node.name])).toContainEqual(["method", "Load"]);
+    expect(nodes.map((node) => [node.kind, node.name])).toContainEqual(["call", "FindById"]);
   });
 });
+
+function flatten(root: CommonASTNode): CommonASTNode[] {
+  return [root, ...root.children.flatMap((child) => flatten(child))];
+}
 
 describe("parsePath", () => {
   it("returns a bundle with ASTs, symbols, links, and diagnostics", async () => {

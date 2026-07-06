@@ -9,6 +9,14 @@ import { inferProbableTypeHints } from "./typeHints.js";
 import type { AnalysisBundle, CommonAST, Diagnostic, ParseCodeOptions, ParsePathOptions } from "./types.js";
 
 export async function parseCode(input: string, options: ParseCodeOptions = {}): Promise<CommonAST> {
+  return parseCodeWithTreeSitter(input, options, buildTreeSitterAst);
+}
+
+export async function parseCodeWithTreeSitter(
+  input: string,
+  options: ParseCodeOptions,
+  treeSitterBuilder: typeof buildTreeSitterAst
+): Promise<CommonAST> {
   const language = options.language ?? detectLanguage(options.filePath, input);
   if (!language) {
     return buildHeuristicAst(input, "java", options.filePath, [languageDiagnostic(options.filePath)]);
@@ -16,7 +24,7 @@ export async function parseCode(input: string, options: ParseCodeOptions = {}): 
 
   const diagnostics: Diagnostic[] = [];
   if (options.parserMode !== "heuristic") {
-    const treeSitter = buildTreeSitterAst(input, language, options.filePath);
+    const treeSitter = treeSitterBuilder(input, language, options.filePath);
     diagnostics.push(...treeSitter.diagnostics);
     if (treeSitter.ast) {
       return treeSitter.ast;

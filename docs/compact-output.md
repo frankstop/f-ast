@@ -10,8 +10,11 @@ f-ast examples/legacy-mixed
 Compact output is line-oriented:
 
 ```text
-project files=2 decls=11 refs=7 links=2 flow=26 hints=5 diagnostics=5
+project files=2 decls=13 refs=7 links=2 flow=26 hints=5 diagnostics=5
 file examples/legacy-mixed/java/CustomerService.java lang=java parser=tree-sitter
+type CustomerService span=5:14-5:29
+constructor CustomerService.CustomerService span=8:12-8:27
+method CustomerService.findCustomer span=12:21-12:33
 decl class CustomerService file=examples/legacy-mixed/java/CustomerService.java span=5:14-5:29
 ref call CustomerService.findCustomer.findById qualifier=repository resolved=no file=...
 edge calls CustomerService.findCustomer -> repository.findById file=...

@@ -1,4 +1,5 @@
 import { spanFromIndexes } from "./sourceSpans.js";
+import { maskNonCode } from "./masking.js";
 import type { CommonAST, ProbableTypeHint, ProbableTypeHintKind, SymbolGraph } from "./types.js";
 
 type SourceMap = Map<string, string>;
@@ -14,8 +15,9 @@ export function inferProbableTypeHints(
   for (const ast of asts) {
     const source = ast.filePath ? sources.get(ast.filePath) : undefined;
     if (!source) continue;
+    const analyzableSource = maskNonCode(source, ast.language);
 
-    for (const match of source.matchAll(/\b([A-Za-z_][\w.]*)\.(Count|Length)\b|\b([A-Za-z_][\w.]*)\.size\s*\(/g)) {
+    for (const match of analyzableSource.matchAll(/\b([A-Za-z_][\w.]*)\.(Count|Length)\b|\b([A-Za-z_][\w.]*)\.size\s*\(/g)) {
       const target = match[1] ?? match[3];
       if (!target) continue;
       hints.push(
@@ -32,7 +34,7 @@ export function inferProbableTypeHints(
       );
     }
 
-    for (const match of source.matchAll(/\bforeach\s*\([^)]*\bin\s+([A-Za-z_][\w.]*)\)|\bfor\s*\([^;()]+:\s*([A-Za-z_][\w.]*)\s*\)/g)) {
+    for (const match of analyzableSource.matchAll(/\bforeach\s*\([^)]*\bin\s+([A-Za-z_][\w.]*)\)|\bfor\s*\([^;()]+:\s*([A-Za-z_][\w.]*)\s*\)/g)) {
       const target = match[1] ?? match[2];
       if (!target) continue;
       hints.push(

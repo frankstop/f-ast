@@ -34,7 +34,7 @@ export type CommonASTNode = {
 };
 
 export type CommonAST = {
-  version: "0.1";
+  version: "0.2";
   language: Language;
   filePath?: string;
   root: CommonASTNode;
@@ -52,7 +52,15 @@ export type ParsePathOptions = {
   include?: string[];
 };
 
-export type DeclarationKind = "class" | "interface" | "enum" | "method" | "field" | "import";
+export type DeclarationKind =
+  | "class"
+  | "interface"
+  | "enum"
+  | "method"
+  | "constructor"
+  | "property"
+  | "field"
+  | "import";
 export type ReferenceKind = "identifier" | "call" | "import";
 
 export type SymbolDeclaration = {

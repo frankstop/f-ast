@@ -93,7 +93,13 @@ function visit(
   }
 
   const nextStack =
-    node.name && (declarationKind === "class" || declarationKind === "method")
+    node.name &&
+    (declarationKind === "class" ||
+      declarationKind === "interface" ||
+      declarationKind === "enum" ||
+      declarationKind === "method" ||
+      declarationKind === "constructor" ||
+      declarationKind === "property")
       ? [...containerStack, node.name]
       : containerStack;
 

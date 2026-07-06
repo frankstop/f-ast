@@ -1,6 +1,6 @@
 import { createRequire } from "node:module";
 import { makeNodeId } from "./ids.js";
-import type { CommonAST, CommonASTNode, Diagnostic, Language, SourceSpan } from "./types.js";
+import type { CommonAST, CommonASTNode, DeclarationKind, Diagnostic, Language, SourceSpan } from "./types.js";
 
 const require = createRequire(import.meta.url);
 
@@ -34,7 +34,7 @@ type TreeSitterAstResult = {
 
 type NodeSpec = {
   kind: string;
-  declarationKind?: string;
+  declarationKind?: DeclarationKind;
   referenceKind?: string;
   name?: string;
   metadata?: Record<string, unknown>;
@@ -44,6 +44,7 @@ const JAVA_TYPES = new Set([
   "class_declaration",
   "interface_declaration",
   "enum_declaration",
+  "constructor_declaration",
   "method_declaration",
   "field_declaration",
   "import_declaration",
@@ -55,6 +56,8 @@ const CSHARP_TYPES = new Set([
   "interface_declaration",
   "enum_declaration",
   "struct_declaration",
+  "constructor_declaration",
+  "property_declaration",
   "method_declaration",
   "field_declaration",
   "using_directive",
@@ -101,7 +104,7 @@ export function buildTreeSitterAst(source: string, language: Language, filePath?
 
     return {
       ast: {
-        version: "0.1",
+        version: "0.2",
         language,
         filePath,
         root,
@@ -122,53 +125,54 @@ export function buildTreeSitterAst(source: string, language: Language, filePath?
 }
 
 function collectMappedNodes(root: SyntaxNode, language: Language, filePath: string | undefined): CommonASTNode[] {
-  const mapped: CommonASTNode[] = [];
   let ordinal = 0;
   const interestingTypes = language === "java" ? JAVA_TYPES : CSHARP_TYPES;
 
-  function visit(node: SyntaxNode, containerStack: string[] = []): void {
-    let nextContainerStack = containerStack;
+  function visit(node: SyntaxNode, containerStack: string[] = []): CommonASTNode[] {
+    const spec = interestingTypes.has(node.type)
+      ? language === "java"
+        ? mapJavaNode(node)
+        : mapCSharpNode(node)
+      : undefined;
 
-    if (interestingTypes.has(node.type)) {
-      const spec = language === "java" ? mapJavaNode(node) : mapCSharpNode(node);
-      if (spec?.name) {
-        const container = containerStack.join(".");
-        mapped.push({
-          id: makeNodeId(language, filePath, spec.kind, ordinal),
-          kind: spec.kind,
-          name: spec.name,
-          language,
-          span: spanFromNameNode(node, spec.name),
-          children: [],
-          metadata: {
-            sourceNodeType: node.type,
-            text: node.text.trim(),
-            container: container || undefined,
-            ...spec.metadata,
-            declarationKind: spec.declarationKind,
-            referenceKind: spec.referenceKind
-          }
-        });
-        ordinal += 1;
+    if (!spec?.name) {
+      return node.namedChildren.flatMap((child) => visit(child, containerStack));
+    }
 
-        if (
-          spec.declarationKind === "class" ||
-          spec.declarationKind === "interface" ||
-          spec.declarationKind === "enum" ||
-          spec.declarationKind === "method"
-        ) {
-          nextContainerStack = [...containerStack, spec.name];
-        }
+    const container = containerStack.join(".");
+    const declarationSpan = spec.declarationKind ? spanFromNode(node) : undefined;
+    const mappedNode: CommonASTNode = {
+      id: makeNodeId(language, filePath, spec.kind, ordinal),
+      kind: spec.kind,
+      name: spec.name,
+      language,
+      span: spanFromNameNode(node, spec.name),
+      children: [],
+      metadata: {
+        sourceNodeType: node.type,
+        text: node.text.trim(),
+        container: container || undefined,
+        declarationSpan,
+        ...spec.metadata,
+        declarationKind: spec.declarationKind,
+        referenceKind: spec.referenceKind
       }
+    };
+    ordinal += 1;
+
+    const isContainer = isContainerDeclaration(spec.declarationKind);
+    const nextContainerStack = isContainer ? [...containerStack, spec.name] : containerStack;
+    const descendants = node.namedChildren.flatMap((child) => visit(child, nextContainerStack));
+
+    if (isContainer) {
+      mappedNode.children = descendants.sort(compareNodes);
+      return [mappedNode];
     }
 
-    for (const child of node.namedChildren) {
-      visit(child, nextContainerStack);
-    }
+    return [mappedNode, ...descendants];
   }
 
-  visit(root);
-  return mapped.sort((left, right) => left.span.startIndex - right.span.startIndex);
+  return visit(root).sort(compareNodes);
 }
 
 function mapJavaNode(node: SyntaxNode): NodeSpec | undefined {
@@ -184,6 +188,13 @@ function mapJavaNode(node: SyntaxNode): NodeSpec | undefined {
   }
   if (node.type === "method_declaration") {
     return { kind: "method", declarationKind: "method", name: fieldText(node, "name") ?? firstIdentifierText(node) };
+  }
+  if (node.type === "constructor_declaration") {
+    return {
+      kind: "constructor",
+      declarationKind: "constructor",
+      name: fieldText(node, "name") ?? firstIdentifierText(node)
+    };
   }
   if (node.type === "field_declaration") {
     return { kind: "field", declarationKind: "field", name: declaratorName(node) };
@@ -220,6 +231,20 @@ function mapCSharpNode(node: SyntaxNode): NodeSpec | undefined {
   }
   if (node.type === "method_declaration") {
     return { kind: "method", declarationKind: "method", name: fieldText(node, "name") ?? lastDirectIdentifierText(node) };
+  }
+  if (node.type === "constructor_declaration") {
+    return {
+      kind: "constructor",
+      declarationKind: "constructor",
+      name: fieldText(node, "name") ?? firstIdentifierText(node)
+    };
+  }
+  if (node.type === "property_declaration") {
+    return {
+      kind: "property",
+      declarationKind: "property",
+      name: fieldText(node, "name") ?? lastDirectIdentifierText(node)
+    };
   }
   if (node.type === "field_declaration") {
     return { kind: "field", declarationKind: "field", name: declaratorName(node) };
@@ -292,6 +317,21 @@ function qualifierText(node: SyntaxNode): string | undefined {
   return text.slice(0, lastDot);
 }
 
+function isContainerDeclaration(declarationKind: DeclarationKind | undefined): boolean {
+  return (
+    declarationKind === "class" ||
+    declarationKind === "interface" ||
+    declarationKind === "enum" ||
+    declarationKind === "method" ||
+    declarationKind === "constructor" ||
+    declarationKind === "property"
+  );
+}
+
+function compareNodes(left: CommonASTNode, right: CommonASTNode): number {
+  return left.span.startIndex - right.span.startIndex;
+}
+
 function spanFromNode(node: SyntaxNode): SourceSpan {
   return {
     start: node.startPosition,
@@ -302,6 +342,9 @@ function spanFromNode(node: SyntaxNode): SourceSpan {
 }
 
 function spanFromNameNode(node: SyntaxNode, name: string): SourceSpan {
+  const nameField = node.childForFieldName?.("name");
+  if (nameField?.text === name) return spanFromNode(nameField);
+
   let found: SyntaxNode | undefined;
   function visit(current: SyntaxNode): void {
     if (found) return;

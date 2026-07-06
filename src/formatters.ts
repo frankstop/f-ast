@@ -75,7 +75,8 @@ export function formatCompact(bundle: AnalysisBundle, profile: OutputProfile = "
 
   for (const ast of bundle.asts) {
     lines.push(`file ${ast.filePath ?? "inline"} lang=${ast.language} parser=${String(ast.root.metadata.parser ?? "unknown")}`);
-    for (const node of ast.root.children) {
+    for (const node of flattenNodes(ast.root)) {
+      if (node === ast.root) continue;
       if (!isStructuralNode(node)) continue;
       lines.push(`${node.kind} ${qualifiedName(node)} span=${spanText(node.span)}`);
     }
@@ -128,7 +129,19 @@ function diagnosticLines(diagnostics: Diagnostic[]): string[] {
 }
 
 function isStructuralNode(node: CommonASTNode): boolean {
-  return node.kind === "type" || node.kind === "method" || node.kind === "field" || node.kind === "import" || node.kind === "call";
+  return (
+    node.kind === "type" ||
+    node.kind === "method" ||
+    node.kind === "constructor" ||
+    node.kind === "property" ||
+    node.kind === "field" ||
+    node.kind === "import" ||
+    node.kind === "call"
+  );
+}
+
+function flattenNodes(root: CommonASTNode): CommonASTNode[] {
+  return [root, ...root.children.flatMap((child) => flattenNodes(child))];
 }
 
 function qualifiedName(node: { name?: string; container?: string; metadata?: Record<string, unknown> }): string {

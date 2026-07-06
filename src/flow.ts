@@ -1,4 +1,5 @@
 import { spanFromIndexes } from "./sourceSpans.js";
+import { maskNonCode } from "./masking.js";
 import type { CommonAST, FlowEdge, FlowEdgeKind, FlowGraph, SourceSpan, SymbolGraph } from "./types.js";
 
 type SourceMap = Map<string, string>;
@@ -68,6 +69,7 @@ export function buildFlowGraph(asts: CommonAST[], symbolGraph: SymbolGraph, sour
 function addSourceEdges(edges: FlowEdge[], ordinal: number, ast: CommonAST, source: string): number {
   const file = ast.filePath ?? "inline";
   const language = ast.language;
+  const analyzableSource = maskNonCode(source, language);
 
   const sourceRules: Array<{ kind: FlowEdgeKind; pattern: RegExp; target: (match: RegExpExecArray) => string }> = [
     { kind: "writes", pattern: /(^|[^=!<>])\b([A-Za-z_][\w.]*)\s*=(?!=)/gm, target: (match) => match[2] ?? match[0].trim() },
@@ -82,7 +84,7 @@ function addSourceEdges(edges: FlowEdge[], ordinal: number, ast: CommonAST, sour
   ];
 
   for (const rule of sourceRules) {
-    for (const match of source.matchAll(rule.pattern)) {
+    for (const match of analyzableSource.matchAll(rule.pattern)) {
       const raw = match[0] ?? "";
       const leading = rule.kind === "writes" ? raw.search(/\b[A-Za-z_]/) : 0;
       const start = (match.index ?? 0) + Math.max(leading, 0);

@@ -26,6 +26,7 @@ type ProbableTypeHint = {
 - Infer only from syntax usage.
 - Include source span when available.
 - Preserve unresolved diagnostics beside hints.
+- Ignore evidence that appears only inside comments or literals.
 - Never present hints as compiler-grade resolution.
 
 Example: an unresolved `repository.findById()` can produce both an unresolved

@@ -1,0 +1,1488 @@
+[
+  {
+    "version": "0.2",
+    "language": "csharp",
+    "filePath": "examples/legacy-messy-sample/csharp/BrokenLegacyJob.cs",
+    "root": {
+      "id": "csharp:examples_legacy-messy-sample_csharp_BrokenLegacyJob.cs:root:0",
+      "kind": "compilationUnit",
+      "language": "csharp",
+      "span": {
+        "start": {
+          "row": 0,
+          "column": 0
+        },
+        "end": {
+          "row": 12,
+          "column": 0
+        },
+        "startIndex": 0,
+        "endIndex": 294
+      },
+      "children": [
+        {
+          "id": "csharp:examples_legacy-messy-sample_csharp_BrokenLegacyJob.cs:call:0",
+          "kind": "call",
+          "name": "Process",
+          "language": "csharp",
+          "span": {
+            "start": {
+              "row": 6,
+              "column": 18
+            },
+            "end": {
+              "row": 6,
+              "column": 25
+            },
+            "startIndex": 118,
+            "endIndex": 125
+          },
+          "children": [],
+          "metadata": {
+            "sourceNodeType": "invocation_expression",
+            "text": "queue.Process()",
+            "qualifier": "queue",
+            "referenceKind": "call"
+          }
+        },
+        {
+          "id": "csharp:examples_legacy-messy-sample_csharp_BrokenLegacyJob.cs:call:1",
+          "kind": "call",
+          "name": "Audit",
+          "language": "csharp",
+          "span": {
+            "start": {
+              "row": 9,
+              "column": 16
+            },
+            "end": {
+              "row": 9,
+              "column": 21
+            },
+            "startIndex": 192,
+            "endIndex": 197
+          },
+          "children": [],
+          "metadata": {
+            "sourceNodeType": "invocation_expression",
+            "text": "Audit()",
+            "referenceKind": "call"
+          }
+        }
+      ],
+      "metadata": {
+        "parser": "tree-sitter",
+        "sourceNodeType": "compilation_unit"
+      }
+    },
+    "diagnostics": [
+      {
+        "code": "parser.syntax-error",
+        "message": "tree-sitter parsed source with syntax errors; CommonAST emitted as partial output.",
+        "severity": "warning",
+        "language": "csharp",
+        "filePath": "examples/legacy-messy-sample/csharp/BrokenLegacyJob.cs"
+      }
+    ]
+  },
+  {
+    "version": "0.2",
+    "language": "csharp",
+    "filePath": "examples/legacy-messy-sample/csharp/LegacyInvoiceService.cs",
+    "root": {
+      "id": "csharp:examples_legacy-messy-sample_csharp_LegacyInvoiceService.cs:root:0",
+      "kind": "compilationUnit",
+      "language": "csharp",
+      "span": {
+        "start": {
+          "row": 0,
+          "column": 0
+        },
+        "end": {
+          "row": 59,
+          "column": 0
+        },
+        "startIndex": 0,
+        "endIndex": 1436
+      },
+      "children": [
+        {
+          "id": "csharp:examples_legacy-messy-sample_csharp_LegacyInvoiceService.cs:import:0",
+          "kind": "import",
+          "name": "System",
+          "language": "csharp",
+          "span": {
+            "start": {
+              "row": 0,
+              "column": 6
+            },
+            "end": {
+              "row": 0,
+              "column": 12
+            },
+            "startIndex": 6,
+            "endIndex": 12
+          },
+          "children": [],
+          "metadata": {
+            "sourceNodeType": "using_directive",
+            "text": "using System;",
+            "declarationSpan": {
+              "start": {
+                "row": 0,
+                "column": 0
+              },
+              "end": {
+                "row": 0,
+                "column": 13
+              },
+              "startIndex": 0,
+              "endIndex": 13
+            },
+            "declarationKind": "import"
+          }
+        },
+        {
+          "id": "csharp:examples_legacy-messy-sample_csharp_LegacyInvoiceService.cs:import:1",
+          "kind": "import",
+          "name": "System.Collections.Generic",
+          "language": "csharp",
+          "span": {
+            "start": {
+              "row": 1,
+              "column": 6
+            },
+            "end": {
+              "row": 1,
+              "column": 32
+            },
+            "startIndex": 20,
+            "endIndex": 46
+          },
+          "children": [],
+          "metadata": {
+            "sourceNodeType": "using_directive",
+            "text": "using System.Collections.Generic;",
+            "declarationSpan": {
+              "start": {
+                "row": 1,
+                "column": 0
+              },
+              "end": {
+                "row": 1,
+                "column": 33
+              },
+              "startIndex": 14,
+              "endIndex": 47
+            },
+            "declarationKind": "import"
+          }
+        },
+        {
+          "id": "csharp:examples_legacy-messy-sample_csharp_LegacyInvoiceService.cs:type:2",
+          "kind": "type",
+          "name": "LegacyInvoiceService",
+          "language": "csharp",
+          "span": {
+            "start": {
+              "row": 7,
+              "column": 25
+            },
+            "end": {
+              "row": 7,
+              "column": 45
+            },
+            "startIndex": 201,
+            "endIndex": 221
+          },
+          "children": [
+            {
+              "id": "csharp:examples_legacy-messy-sample_csharp_LegacyInvoiceService.cs:field:3",
+              "kind": "field",
+              "name": "repository",
+              "language": "csharp",
+              "span": {
+                "start": {
+                  "row": 9,
+                  "column": 43
+                },
+                "end": {
+                  "row": 9,
+                  "column": 53
+                },
+                "startIndex": 285,
+                "endIndex": 295
+              },
+              "children": [],
+              "metadata": {
+                "sourceNodeType": "field_declaration",
+                "text": "private readonly InvoiceRepository repository;",
+                "container": "LegacyInvoiceService",
+                "declarationSpan": {
+                  "start": {
+                    "row": 9,
+                    "column": 8
+                  },
+                  "end": {
+                    "row": 9,
+                    "column": 54
+                  },
+                  "startIndex": 250,
+                  "endIndex": 296
+                },
+                "declarationKind": "field"
+              }
+            },
+            {
+              "id": "csharp:examples_legacy-messy-sample_csharp_LegacyInvoiceService.cs:field:4",
+              "kind": "field",
+              "name": "fakeImport",
+              "language": "csharp",
+              "span": {
+                "start": {
+                  "row": 10,
+                  "column": 23
+                },
+                "end": {
+                  "row": 10,
+                  "column": 33
+                },
+                "startIndex": 320,
+                "endIndex": 330
+              },
+              "children": [],
+              "metadata": {
+                "sourceNodeType": "field_declaration",
+                "text": "private string fakeImport = \"using Fake.FromAString; class StringClass {}\";",
+                "container": "LegacyInvoiceService",
+                "declarationSpan": {
+                  "start": {
+                    "row": 10,
+                    "column": 8
+                  },
+                  "end": {
+                    "row": 10,
+                    "column": 83
+                  },
+                  "startIndex": 305,
+                  "endIndex": 380
+                },
+                "declarationKind": "field"
+              }
+            },
+            {
+              "id": "csharp:examples_legacy-messy-sample_csharp_LegacyInvoiceService.cs:field:5",
+              "kind": "field",
+              "name": "fakeCalls",
+              "language": "csharp",
+              "span": {
+                "start": {
+                  "row": 11,
+                  "column": 23
+                },
+                "end": {
+                  "row": 11,
+                  "column": 32
+                },
+                "startIndex": 404,
+                "endIndex": 413
+              },
+              "children": [],
+              "metadata": {
+                "sourceNodeType": "field_declaration",
+                "text": "private string fakeCalls = @\"Fake.Run();\nif (fake.Count > 0) { Fake.Stop(); }\";",
+                "container": "LegacyInvoiceService",
+                "declarationSpan": {
+                  "start": {
+                    "row": 11,
+                    "column": 8
+                  },
+                  "end": {
+                    "row": 12,
+                    "column": 38
+                  },
+                  "startIndex": 389,
+                  "endIndex": 468
+                },
+                "declarationKind": "field"
+              }
+            },
+            {
+              "id": "csharp:examples_legacy-messy-sample_csharp_LegacyInvoiceService.cs:property:6",
+              "kind": "property",
+              "name": "Name",
+              "language": "csharp",
+              "span": {
+                "start": {
+                  "row": 14,
+                  "column": 22
+                },
+                "end": {
+                  "row": 14,
+                  "column": 26
+                },
+                "startIndex": 492,
+                "endIndex": 496
+              },
+              "children": [],
+              "metadata": {
+                "sourceNodeType": "property_declaration",
+                "text": "public string Name { get; private set; }",
+                "container": "LegacyInvoiceService",
+                "declarationSpan": {
+                  "start": {
+                    "row": 14,
+                    "column": 8
+                  },
+                  "end": {
+                    "row": 14,
+                    "column": 48
+                  },
+                  "startIndex": 478,
+                  "endIndex": 518
+                },
+                "declarationKind": "property"
+              }
+            },
+            {
+              "id": "csharp:examples_legacy-messy-sample_csharp_LegacyInvoiceService.cs:property:7",
+              "kind": "property",
+              "name": "PendingCount",
+              "language": "csharp",
+              "span": {
+                "start": {
+                  "row": 16,
+                  "column": 19
+                },
+                "end": {
+                  "row": 16,
+                  "column": 31
+                },
+                "startIndex": 539,
+                "endIndex": 551
+              },
+              "children": [],
+              "metadata": {
+                "sourceNodeType": "property_declaration",
+                "text": "public int PendingCount\n        {\n            get\n            {\n                return invoices.Count;\n            }\n        }",
+                "container": "LegacyInvoiceService",
+                "declarationSpan": {
+                  "start": {
+                    "row": 16,
+                    "column": 8
+                  },
+                  "end": {
+                    "row": 22,
+                    "column": 9
+                  },
+                  "startIndex": 528,
+                  "endIndex": 654
+                },
+                "declarationKind": "property"
+              }
+            },
+            {
+              "id": "csharp:examples_legacy-messy-sample_csharp_LegacyInvoiceService.cs:constructor:8",
+              "kind": "constructor",
+              "name": "LegacyInvoiceService",
+              "language": "csharp",
+              "span": {
+                "start": {
+                  "row": 24,
+                  "column": 15
+                },
+                "end": {
+                  "row": 24,
+                  "column": 35
+                },
+                "startIndex": 671,
+                "endIndex": 691
+              },
+              "children": [],
+              "metadata": {
+                "sourceNodeType": "constructor_declaration",
+                "text": "public LegacyInvoiceService(InvoiceRepository repository) : base(repository)\n        {\n            this.repository = repository;\n        }",
+                "container": "LegacyInvoiceService",
+                "declarationSpan": {
+                  "start": {
+                    "row": 24,
+                    "column": 8
+                  },
+                  "end": {
+                    "row": 27,
+                    "column": 9
+                  },
+                  "startIndex": 664,
+                  "endIndex": 802
+                },
+                "declarationKind": "constructor"
+              }
+            },
+            {
+              "id": "csharp:examples_legacy-messy-sample_csharp_LegacyInvoiceService.cs:method:9",
+              "kind": "method",
+              "name": "Load",
+              "language": "csharp",
+              "span": {
+                "start": {
+                  "row": 29,
+                  "column": 23
+                },
+                "end": {
+                  "row": 29,
+                  "column": 27
+                },
+                "startIndex": 827,
+                "endIndex": 831
+              },
+              "children": [
+                {
+                  "id": "csharp:examples_legacy-messy-sample_csharp_LegacyInvoiceService.cs:call:10",
+                  "kind": "call",
+                  "name": "FindById",
+                  "language": "csharp",
+                  "span": {
+                    "start": {
+                      "row": 31,
+                      "column": 30
+                    },
+                    "end": {
+                      "row": 31,
+                      "column": 38
+                    },
+                    "startIndex": 883,
+                    "endIndex": 891
+                  },
+                  "children": [],
+                  "metadata": {
+                    "sourceNodeType": "invocation_expression",
+                    "text": "repository.FindById(id)",
+                    "container": "LegacyInvoiceService.Load",
+                    "qualifier": "repository",
+                    "referenceKind": "call"
+                  }
+                }
+              ],
+              "metadata": {
+                "sourceNodeType": "method_declaration",
+                "text": "public Invoice Load(string id)\n        {\n            return repository.FindById(id);\n        }",
+                "container": "LegacyInvoiceService",
+                "declarationSpan": {
+                  "start": {
+                    "row": 29,
+                    "column": 8
+                  },
+                  "end": {
+                    "row": 32,
+                    "column": 9
+                  },
+                  "startIndex": 812,
+                  "endIndex": 906
+                },
+                "declarationKind": "method"
+              }
+            },
+            {
+              "id": "csharp:examples_legacy-messy-sample_csharp_LegacyInvoiceService.cs:method:11",
+              "kind": "method",
+              "name": "Load",
+              "language": "csharp",
+              "span": {
+                "start": {
+                  "row": 34,
+                  "column": 23
+                },
+                "end": {
+                  "row": 34,
+                  "column": 27
+                },
+                "startIndex": 931,
+                "endIndex": 935
+              },
+              "children": [
+                {
+                  "id": "csharp:examples_legacy-messy-sample_csharp_LegacyInvoiceService.cs:call:12",
+                  "kind": "call",
+                  "name": "Audit",
+                  "language": "csharp",
+                  "span": {
+                    "start": {
+                      "row": 36,
+                      "column": 12
+                    },
+                    "end": {
+                      "row": 36,
+                      "column": 17
+                    },
+                    "startIndex": 972,
+                    "endIndex": 977
+                  },
+                  "children": [],
+                  "metadata": {
+                    "sourceNodeType": "invocation_expression",
+                    "text": "Audit($\"legacy:{legacyId}\")",
+                    "container": "LegacyInvoiceService.Load",
+                    "referenceKind": "call"
+                  }
+                },
+                {
+                  "id": "csharp:examples_legacy-messy-sample_csharp_LegacyInvoiceService.cs:call:13",
+                  "kind": "call",
+                  "name": "FindLegacy",
+                  "language": "csharp",
+                  "span": {
+                    "start": {
+                      "row": 37,
+                      "column": 30
+                    },
+                    "end": {
+                      "row": 37,
+                      "column": 40
+                    },
+                    "startIndex": 1031,
+                    "endIndex": 1041
+                  },
+                  "children": [],
+                  "metadata": {
+                    "sourceNodeType": "invocation_expression",
+                    "text": "repository.FindLegacy(legacyId)",
+                    "container": "LegacyInvoiceService.Load",
+                    "qualifier": "repository",
+                    "referenceKind": "call"
+                  }
+                }
+              ],
+              "metadata": {
+                "sourceNodeType": "method_declaration",
+                "text": "public Invoice Load(int legacyId)\n        {\n            Audit($\"legacy:{legacyId}\");\n            return repository.FindLegacy(legacyId);\n        }",
+                "container": "LegacyInvoiceService",
+                "declarationSpan": {
+                  "start": {
+                    "row": 34,
+                    "column": 8
+                  },
+                  "end": {
+                    "row": 38,
+                    "column": 9
+                  },
+                  "startIndex": 916,
+                  "endIndex": 1062
+                },
+                "declarationKind": "method"
+              }
+            },
+            {
+              "id": "csharp:examples_legacy-messy-sample_csharp_LegacyInvoiceService.cs:method:14",
+              "kind": "method",
+              "name": "Audit",
+              "language": "csharp",
+              "span": {
+                "start": {
+                  "row": 40,
+                  "column": 21
+                },
+                "end": {
+                  "row": 40,
+                  "column": 26
+                },
+                "startIndex": 1085,
+                "endIndex": 1090
+              },
+              "children": [
+                {
+                  "id": "csharp:examples_legacy-messy-sample_csharp_LegacyInvoiceService.cs:call:15",
+                  "kind": "call",
+                  "name": "WriteLine",
+                  "language": "csharp",
+                  "span": {
+                    "start": {
+                      "row": 42,
+                      "column": 20
+                    },
+                    "end": {
+                      "row": 42,
+                      "column": 29
+                    },
+                    "startIndex": 1137,
+                    "endIndex": 1146
+                  },
+                  "children": [],
+                  "metadata": {
+                    "sourceNodeType": "invocation_expression",
+                    "text": "Console.WriteLine(message)",
+                    "container": "LegacyInvoiceService.Audit",
+                    "qualifier": "Console",
+                    "referenceKind": "call"
+                  }
+                }
+              ],
+              "metadata": {
+                "sourceNodeType": "method_declaration",
+                "text": "private void Audit(string message)\n        {\n            Console.WriteLine(message);\n        }",
+                "container": "LegacyInvoiceService",
+                "declarationSpan": {
+                  "start": {
+                    "row": 40,
+                    "column": 8
+                  },
+                  "end": {
+                    "row": 43,
+                    "column": 9
+                  },
+                  "startIndex": 1072,
+                  "endIndex": 1166
+                },
+                "declarationKind": "method"
+              }
+            },
+            {
+              "id": "csharp:examples_legacy-messy-sample_csharp_LegacyInvoiceService.cs:type:16",
+              "kind": "type",
+              "name": "Cache",
+              "language": "csharp",
+              "span": {
+                "start": {
+                  "row": 50,
+                  "column": 21
+                },
+                "end": {
+                  "row": 50,
+                  "column": 26
+                },
+                "startIndex": 1309,
+                "endIndex": 1314
+              },
+              "children": [
+                {
+                  "id": "csharp:examples_legacy-messy-sample_csharp_LegacyInvoiceService.cs:method:17",
+                  "kind": "method",
+                  "name": "Clear",
+                  "language": "csharp",
+                  "span": {
+                    "start": {
+                      "row": 52,
+                      "column": 24
+                    },
+                    "end": {
+                      "row": 52,
+                      "column": 29
+                    },
+                    "startIndex": 1349,
+                    "endIndex": 1354
+                  },
+                  "children": [
+                    {
+                      "id": "csharp:examples_legacy-messy-sample_csharp_LegacyInvoiceService.cs:call:18",
+                      "kind": "call",
+                      "name": "Clear",
+                      "language": "csharp",
+                      "span": {
+                        "start": {
+                          "row": 54,
+                          "column": 24
+                        },
+                        "end": {
+                          "row": 54,
+                          "column": 29
+                        },
+                        "startIndex": 1395,
+                        "endIndex": 1400
+                      },
+                      "children": [],
+                      "metadata": {
+                        "sourceNodeType": "invocation_expression",
+                        "text": "entries.Clear()",
+                        "container": "LegacyInvoiceService.Cache.Clear",
+                        "qualifier": "entries",
+                        "referenceKind": "call"
+                      }
+                    }
+                  ],
+                  "metadata": {
+                    "sourceNodeType": "method_declaration",
+                    "text": "public void Clear()\n            {\n                entries.Clear();\n            }",
+                    "container": "LegacyInvoiceService.Cache",
+                    "declarationSpan": {
+                      "start": {
+                        "row": 52,
+                        "column": 12
+                      },
+                      "end": {
+                        "row": 55,
+                        "column": 13
+                      },
+                      "startIndex": 1337,
+                      "endIndex": 1417
+                    },
+                    "declarationKind": "method"
+                  }
+                }
+              ],
+              "metadata": {
+                "sourceNodeType": "class_declaration",
+                "text": "public class Cache\n        {\n            public void Clear()\n            {\n                entries.Clear();\n            }\n        }",
+                "container": "LegacyInvoiceService",
+                "declarationSpan": {
+                  "start": {
+                    "row": 50,
+                    "column": 8
+                  },
+                  "end": {
+                    "row": 56,
+                    "column": 9
+                  },
+                  "startIndex": 1296,
+                  "endIndex": 1427
+                },
+                "declarationKind": "class"
+              }
+            }
+          ],
+          "metadata": {
+            "sourceNodeType": "class_declaration",
+            "text": "public partial class LegacyInvoiceService : BaseService\n    {\n        private readonly InvoiceRepository repository;\n        private string fakeImport = \"using Fake.FromAString; class StringClass {}\";\n        private string fakeCalls = @\"Fake.Run();\nif (fake.Count > 0) { Fake.Stop(); }\";\n\n        public string Name { get; private set; }\n\n        public int PendingCount\n        {\n            get\n            {\n                return invoices.Count;\n            }\n        }\n\n        public LegacyInvoiceService(InvoiceRepository repository) : base(repository)\n        {\n            this.repository = repository;\n        }\n\n        public Invoice Load(string id)\n        {\n            return repository.FindById(id);\n        }\n\n        public Invoice Load(int legacyId)\n        {\n            Audit($\"legacy:{legacyId}\");\n            return repository.FindLegacy(legacyId);\n        }\n\n        private void Audit(string message)\n        {\n            Console.WriteLine(message);\n        }\n\n        /*\n         * public void CommentedOut() {\n         *     Dangerous.EraseEverything();\n         * }\n         */\n        public class Cache\n        {\n            public void Clear()\n            {\n                entries.Clear();\n            }\n        }\n    }",
+            "declarationSpan": {
+              "start": {
+                "row": 7,
+                "column": 4
+              },
+              "end": {
+                "row": 57,
+                "column": 5
+              },
+              "startIndex": 180,
+              "endIndex": 1433
+            },
+            "declarationKind": "class"
+          }
+        }
+      ],
+      "metadata": {
+        "parser": "tree-sitter",
+        "sourceNodeType": "compilation_unit"
+      }
+    },
+    "diagnostics": []
+  },
+  {
+    "version": "0.2",
+    "language": "java",
+    "filePath": "examples/legacy-messy-sample/java/BrokenLegacyJob.java",
+    "root": {
+      "id": "java:examples_legacy-messy-sample_java_BrokenLegacyJob.java:root:0",
+      "kind": "compilationUnit",
+      "language": "java",
+      "span": {
+        "start": {
+          "row": 0,
+          "column": 0
+        },
+        "end": {
+          "row": 9,
+          "column": 0
+        },
+        "startIndex": 0,
+        "endIndex": 241
+      },
+      "children": [
+        {
+          "id": "java:examples_legacy-messy-sample_java_BrokenLegacyJob.java:type:0",
+          "kind": "type",
+          "name": "BrokenLegacyJob",
+          "language": "java",
+          "span": {
+            "start": {
+              "row": 2,
+              "column": 13
+            },
+            "end": {
+              "row": 2,
+              "column": 28
+            },
+            "startIndex": 36,
+            "endIndex": 51
+          },
+          "children": [
+            {
+              "id": "java:examples_legacy-messy-sample_java_BrokenLegacyJob.java:method:1",
+              "kind": "method",
+              "name": "run",
+              "language": "java",
+              "span": {
+                "start": {
+                  "row": 3,
+                  "column": 16
+                },
+                "end": {
+                  "row": 3,
+                  "column": 19
+                },
+                "startIndex": 70,
+                "endIndex": 73
+              },
+              "children": [
+                {
+                  "id": "java:examples_legacy-messy-sample_java_BrokenLegacyJob.java:call:2",
+                  "kind": "call",
+                  "name": "process",
+                  "language": "java",
+                  "span": {
+                    "start": {
+                      "row": 4,
+                      "column": 14
+                    },
+                    "end": {
+                      "row": 4,
+                      "column": 21
+                    },
+                    "startIndex": 92,
+                    "endIndex": 99
+                  },
+                  "children": [],
+                  "metadata": {
+                    "sourceNodeType": "method_invocation",
+                    "text": "queue.process()",
+                    "container": "BrokenLegacyJob.run",
+                    "qualifier": "queue",
+                    "referenceKind": "call"
+                  }
+                },
+                {
+                  "id": "java:examples_legacy-messy-sample_java_BrokenLegacyJob.java:call:3",
+                  "kind": "call",
+                  "name": "size",
+                  "language": "java",
+                  "span": {
+                    "start": {
+                      "row": 5,
+                      "column": 18
+                    },
+                    "end": {
+                      "row": 5,
+                      "column": 22
+                    },
+                    "startIndex": 121,
+                    "endIndex": 125
+                  },
+                  "children": [],
+                  "metadata": {
+                    "sourceNodeType": "method_invocation",
+                    "text": "queue.size()",
+                    "container": "BrokenLegacyJob.run",
+                    "qualifier": "queue",
+                    "referenceKind": "call"
+                  }
+                },
+                {
+                  "id": "java:examples_legacy-messy-sample_java_BrokenLegacyJob.java:call:4",
+                  "kind": "call",
+                  "name": "audit",
+                  "language": "java",
+                  "span": {
+                    "start": {
+                      "row": 6,
+                      "column": 12
+                    },
+                    "end": {
+                      "row": 6,
+                      "column": 17
+                    },
+                    "startIndex": 147,
+                    "endIndex": 152
+                  },
+                  "children": [],
+                  "metadata": {
+                    "sourceNodeType": "method_invocation",
+                    "text": "audit()",
+                    "container": "BrokenLegacyJob.run",
+                    "referenceKind": "call"
+                  }
+                }
+              ],
+              "metadata": {
+                "sourceNodeType": "method_declaration",
+                "text": "public void run() {\n        queue.process();\n        if (queue.size() > 0) {\n            audit();\n        }\n    // Intentionally missing closing braces to demonstrate partial output.",
+                "container": "BrokenLegacyJob",
+                "declarationSpan": {
+                  "start": {
+                    "row": 3,
+                    "column": 4
+                  },
+                  "end": {
+                    "row": 8,
+                    "column": 74
+                  },
+                  "startIndex": 58,
+                  "endIndex": 240
+                },
+                "declarationKind": "method"
+              }
+            }
+          ],
+          "metadata": {
+            "sourceNodeType": "class_declaration",
+            "text": "public class BrokenLegacyJob {\n    public void run() {\n        queue.process();\n        if (queue.size() > 0) {\n            audit();\n        }\n    // Intentionally missing closing braces to demonstrate partial output.",
+            "declarationSpan": {
+              "start": {
+                "row": 2,
+                "column": 0
+              },
+              "end": {
+                "row": 8,
+                "column": 74
+              },
+              "startIndex": 23,
+              "endIndex": 240
+            },
+            "declarationKind": "class"
+          }
+        }
+      ],
+      "metadata": {
+        "parser": "tree-sitter",
+        "sourceNodeType": "program"
+      }
+    },
+    "diagnostics": [
+      {
+        "code": "parser.syntax-error",
+        "message": "tree-sitter parsed source with syntax errors; CommonAST emitted as partial output.",
+        "severity": "warning",
+        "language": "java",
+        "filePath": "examples/legacy-messy-sample/java/BrokenLegacyJob.java"
+      }
+    ]
+  },
+  {
+    "version": "0.2",
+    "language": "java",
+    "filePath": "examples/legacy-messy-sample/java/LegacyCustomerService.java",
+    "root": {
+      "id": "java:examples_legacy-messy-sample_java_LegacyCustomerService.java:root:0",
+      "kind": "compilationUnit",
+      "language": "java",
+      "span": {
+        "start": {
+          "row": 0,
+          "column": 0
+        },
+        "end": {
+          "row": 39,
+          "column": 0
+        },
+        "startIndex": 0,
+        "endIndex": 951
+      },
+      "children": [
+        {
+          "id": "java:examples_legacy-messy-sample_java_LegacyCustomerService.java:import:0",
+          "kind": "import",
+          "name": "java.util.List",
+          "language": "java",
+          "span": {
+            "start": {
+              "row": 2,
+              "column": 7
+            },
+            "end": {
+              "row": 2,
+              "column": 21
+            },
+            "startIndex": 30,
+            "endIndex": 44
+          },
+          "children": [],
+          "metadata": {
+            "sourceNodeType": "import_declaration",
+            "text": "import java.util.List;",
+            "declarationSpan": {
+              "start": {
+                "row": 2,
+                "column": 0
+              },
+              "end": {
+                "row": 2,
+                "column": 22
+              },
+              "startIndex": 23,
+              "endIndex": 45
+            },
+            "declarationKind": "import"
+          }
+        },
+        {
+          "id": "java:examples_legacy-messy-sample_java_LegacyCustomerService.java:type:1",
+          "kind": "type",
+          "name": "LegacyCustomerService",
+          "language": "java",
+          "span": {
+            "start": {
+              "row": 7,
+              "column": 13
+            },
+            "end": {
+              "row": 7,
+              "column": 34
+            },
+            "startIndex": 167,
+            "endIndex": 188
+          },
+          "children": [
+            {
+              "id": "java:examples_legacy-messy-sample_java_LegacyCustomerService.java:field:2",
+              "kind": "field",
+              "name": "repository",
+              "language": "java",
+              "span": {
+                "start": {
+                  "row": 8,
+                  "column": 37
+                },
+                "end": {
+                  "row": 8,
+                  "column": 47
+                },
+                "startIndex": 228,
+                "endIndex": 238
+              },
+              "children": [],
+              "metadata": {
+                "sourceNodeType": "field_declaration",
+                "text": "private final CustomerRepository repository;",
+                "container": "LegacyCustomerService",
+                "declarationSpan": {
+                  "start": {
+                    "row": 8,
+                    "column": 4
+                  },
+                  "end": {
+                    "row": 8,
+                    "column": 48
+                  },
+                  "startIndex": 195,
+                  "endIndex": 239
+                },
+                "declarationKind": "field"
+              }
+            },
+            {
+              "id": "java:examples_legacy-messy-sample_java_LegacyCustomerService.java:field:3",
+              "kind": "field",
+              "name": "fakeImport",
+              "language": "java",
+              "span": {
+                "start": {
+                  "row": 9,
+                  "column": 25
+                },
+                "end": {
+                  "row": 9,
+                  "column": 35
+                },
+                "startIndex": 265,
+                "endIndex": 275
+              },
+              "children": [],
+              "metadata": {
+                "sourceNodeType": "field_declaration",
+                "text": "private final String fakeImport = \"import fake.FromAString; class StringClass {}\";",
+                "container": "LegacyCustomerService",
+                "declarationSpan": {
+                  "start": {
+                    "row": 9,
+                    "column": 4
+                  },
+                  "end": {
+                    "row": 9,
+                    "column": 86
+                  },
+                  "startIndex": 244,
+                  "endIndex": 326
+                },
+                "declarationKind": "field"
+              }
+            },
+            {
+              "id": "java:examples_legacy-messy-sample_java_LegacyCustomerService.java:constructor:4",
+              "kind": "constructor",
+              "name": "LegacyCustomerService",
+              "language": "java",
+              "span": {
+                "start": {
+                  "row": 11,
+                  "column": 11
+                },
+                "end": {
+                  "row": 11,
+                  "column": 32
+                },
+                "startIndex": 339,
+                "endIndex": 360
+              },
+              "children": [],
+              "metadata": {
+                "sourceNodeType": "constructor_declaration",
+                "text": "public LegacyCustomerService(CustomerRepository repository) {\n        this.repository = repository;\n    }",
+                "container": "LegacyCustomerService",
+                "declarationSpan": {
+                  "start": {
+                    "row": 11,
+                    "column": 4
+                  },
+                  "end": {
+                    "row": 13,
+                    "column": 5
+                  },
+                  "startIndex": 332,
+                  "endIndex": 437
+                },
+                "declarationKind": "constructor"
+              }
+            },
+            {
+              "id": "java:examples_legacy-messy-sample_java_LegacyCustomerService.java:method:5",
+              "kind": "method",
+              "name": "load",
+              "language": "java",
+              "span": {
+                "start": {
+                  "row": 15,
+                  "column": 20
+                },
+                "end": {
+                  "row": 15,
+                  "column": 24
+                },
+                "startIndex": 459,
+                "endIndex": 463
+              },
+              "children": [
+                {
+                  "id": "java:examples_legacy-messy-sample_java_LegacyCustomerService.java:call:6",
+                  "kind": "call",
+                  "name": "findById",
+                  "language": "java",
+                  "span": {
+                    "start": {
+                      "row": 16,
+                      "column": 26
+                    },
+                    "end": {
+                      "row": 16,
+                      "column": 34
+                    },
+                    "startIndex": 503,
+                    "endIndex": 511
+                  },
+                  "children": [],
+                  "metadata": {
+                    "sourceNodeType": "method_invocation",
+                    "text": "repository.findById(id)",
+                    "container": "LegacyCustomerService.load",
+                    "qualifier": "repository",
+                    "referenceKind": "call"
+                  }
+                }
+              ],
+              "metadata": {
+                "sourceNodeType": "method_declaration",
+                "text": "public Customer load(String id) {\n        return repository.findById(id);\n    }",
+                "container": "LegacyCustomerService",
+                "declarationSpan": {
+                  "start": {
+                    "row": 15,
+                    "column": 4
+                  },
+                  "end": {
+                    "row": 17,
+                    "column": 5
+                  },
+                  "startIndex": 443,
+                  "endIndex": 522
+                },
+                "declarationKind": "method"
+              }
+            },
+            {
+              "id": "java:examples_legacy-messy-sample_java_LegacyCustomerService.java:method:7",
+              "kind": "method",
+              "name": "load",
+              "language": "java",
+              "span": {
+                "start": {
+                  "row": 19,
+                  "column": 20
+                },
+                "end": {
+                  "row": 19,
+                  "column": 24
+                },
+                "startIndex": 544,
+                "endIndex": 548
+              },
+              "children": [
+                {
+                  "id": "java:examples_legacy-messy-sample_java_LegacyCustomerService.java:call:8",
+                  "kind": "call",
+                  "name": "audit",
+                  "language": "java",
+                  "span": {
+                    "start": {
+                      "row": 20,
+                      "column": 8
+                    },
+                    "end": {
+                      "row": 20,
+                      "column": 13
+                    },
+                    "startIndex": 573,
+                    "endIndex": 578
+                  },
+                  "children": [],
+                  "metadata": {
+                    "sourceNodeType": "method_invocation",
+                    "text": "audit(\"legacy:\" + legacyId)",
+                    "container": "LegacyCustomerService.load",
+                    "referenceKind": "call"
+                  }
+                },
+                {
+                  "id": "java:examples_legacy-messy-sample_java_LegacyCustomerService.java:call:9",
+                  "kind": "call",
+                  "name": "findLegacy",
+                  "language": "java",
+                  "span": {
+                    "start": {
+                      "row": 21,
+                      "column": 26
+                    },
+                    "end": {
+                      "row": 21,
+                      "column": 36
+                    },
+                    "startIndex": 628,
+                    "endIndex": 638
+                  },
+                  "children": [],
+                  "metadata": {
+                    "sourceNodeType": "method_invocation",
+                    "text": "repository.findLegacy(legacyId)",
+                    "container": "LegacyCustomerService.load",
+                    "qualifier": "repository",
+                    "referenceKind": "call"
+                  }
+                }
+              ],
+              "metadata": {
+                "sourceNodeType": "method_declaration",
+                "text": "public Customer load(int legacyId) {\n        audit(\"legacy:\" + legacyId);\n        return repository.findLegacy(legacyId);\n    }",
+                "container": "LegacyCustomerService",
+                "declarationSpan": {
+                  "start": {
+                    "row": 19,
+                    "column": 4
+                  },
+                  "end": {
+                    "row": 22,
+                    "column": 5
+                  },
+                  "startIndex": 528,
+                  "endIndex": 655
+                },
+                "declarationKind": "method"
+              }
+            },
+            {
+              "id": "java:examples_legacy-messy-sample_java_LegacyCustomerService.java:method:10",
+              "kind": "method",
+              "name": "audit",
+              "language": "java",
+              "span": {
+                "start": {
+                  "row": 24,
+                  "column": 17
+                },
+                "end": {
+                  "row": 24,
+                  "column": 22
+                },
+                "startIndex": 674,
+                "endIndex": 679
+              },
+              "children": [
+                {
+                  "id": "java:examples_legacy-messy-sample_java_LegacyCustomerService.java:call:11",
+                  "kind": "call",
+                  "name": "println",
+                  "language": "java",
+                  "span": {
+                    "start": {
+                      "row": 25,
+                      "column": 19
+                    },
+                    "end": {
+                      "row": 25,
+                      "column": 26
+                    },
+                    "startIndex": 717,
+                    "endIndex": 724
+                  },
+                  "children": [],
+                  "metadata": {
+                    "sourceNodeType": "method_invocation",
+                    "text": "System.out.println(message)",
+                    "container": "LegacyCustomerService.audit",
+                    "qualifier": "System.out",
+                    "referenceKind": "call"
+                  }
+                }
+              ],
+              "metadata": {
+                "sourceNodeType": "method_declaration",
+                "text": "private void audit(String message) {\n        System.out.println(message);\n    }",
+                "container": "LegacyCustomerService",
+                "declarationSpan": {
+                  "start": {
+                    "row": 24,
+                    "column": 4
+                  },
+                  "end": {
+                    "row": 26,
+                    "column": 5
+                  },
+                  "startIndex": 661,
+                  "endIndex": 740
+                },
+                "declarationKind": "method"
+              }
+            },
+            {
+              "id": "java:examples_legacy-messy-sample_java_LegacyCustomerService.java:type:12",
+              "kind": "type",
+              "name": "Cache",
+              "language": "java",
+              "span": {
+                "start": {
+                  "row": 33,
+                  "column": 24
+                },
+                "end": {
+                  "row": 33,
+                  "column": 29
+                },
+                "startIndex": 866,
+                "endIndex": 871
+              },
+              "children": [
+                {
+                  "id": "java:examples_legacy-messy-sample_java_LegacyCustomerService.java:method:13",
+                  "kind": "method",
+                  "name": "clear",
+                  "language": "java",
+                  "span": {
+                    "start": {
+                      "row": 34,
+                      "column": 20
+                    },
+                    "end": {
+                      "row": 34,
+                      "column": 25
+                    },
+                    "startIndex": 894,
+                    "endIndex": 899
+                  },
+                  "children": [
+                    {
+                      "id": "java:examples_legacy-messy-sample_java_LegacyCustomerService.java:call:14",
+                      "kind": "call",
+                      "name": "clear",
+                      "language": "java",
+                      "span": {
+                        "start": {
+                          "row": 35,
+                          "column": 20
+                        },
+                        "end": {
+                          "row": 35,
+                          "column": 25
+                        },
+                        "startIndex": 924,
+                        "endIndex": 929
+                      },
+                      "children": [],
+                      "metadata": {
+                        "sourceNodeType": "method_invocation",
+                        "text": "entries.clear()",
+                        "container": "LegacyCustomerService.Cache.clear",
+                        "qualifier": "entries",
+                        "referenceKind": "call"
+                      }
+                    }
+                  ],
+                  "metadata": {
+                    "sourceNodeType": "method_declaration",
+                    "text": "public void clear() {\n            entries.clear();\n        }",
+                    "container": "LegacyCustomerService.Cache",
+                    "declarationSpan": {
+                      "start": {
+                        "row": 34,
+                        "column": 8
+                      },
+                      "end": {
+                        "row": 36,
+                        "column": 9
+                      },
+                      "startIndex": 882,
+                      "endIndex": 942
+                    },
+                    "declarationKind": "method"
+                  }
+                }
+              ],
+              "metadata": {
+                "sourceNodeType": "class_declaration",
+                "text": "public static class Cache {\n        public void clear() {\n            entries.clear();\n        }\n    }",
+                "container": "LegacyCustomerService",
+                "declarationSpan": {
+                  "start": {
+                    "row": 33,
+                    "column": 4
+                  },
+                  "end": {
+                    "row": 37,
+                    "column": 5
+                  },
+                  "startIndex": 846,
+                  "endIndex": 948
+                },
+                "declarationKind": "class"
+              }
+            }
+          ],
+          "metadata": {
+            "sourceNodeType": "class_declaration",
+            "text": "@Deprecated\npublic class LegacyCustomerService {\n    private final CustomerRepository repository;\n    private final String fakeImport = \"import fake.FromAString; class StringClass {}\";\n\n    public LegacyCustomerService(CustomerRepository repository) {\n        this.repository = repository;\n    }\n\n    public Customer load(String id) {\n        return repository.findById(id);\n    }\n\n    public Customer load(int legacyId) {\n        audit(\"legacy:\" + legacyId);\n        return repository.findLegacy(legacyId);\n    }\n\n    private void audit(String message) {\n        System.out.println(message);\n    }\n\n    /*\n     * public void commentedOut() {\n     *     Dangerous.eraseEverything();\n     * }\n     */\n    public static class Cache {\n        public void clear() {\n            entries.clear();\n        }\n    }\n}",
+            "declarationSpan": {
+              "start": {
+                "row": 6,
+                "column": 0
+              },
+              "end": {
+                "row": 38,
+                "column": 1
+              },
+              "startIndex": 142,
+              "endIndex": 950
+            },
+            "declarationKind": "class"
+          }
+        }
+      ],
+      "metadata": {
+        "parser": "tree-sitter",
+        "sourceNodeType": "program"
+      }
+    },
+    "diagnostics": []
+  }
+]

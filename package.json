@@ -38,6 +38,7 @@
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test": "vitest run",
     "test:smoke": "node test/smoke.mjs",
+    "demo:snapshots": "npm run build && node scripts/generate-demo-snapshots.mjs",
     "pack:smoke": "node scripts/pack-smoke.mjs",
     "check:release": "npm run check && npm run pack:smoke",
     "release:dry-run": "npm run check:release && node scripts/release-dry-run.mjs",

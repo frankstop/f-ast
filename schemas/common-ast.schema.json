@@ -6,7 +6,7 @@
   "required": ["version", "language", "root", "diagnostics"],
   "properties": {
     "version": {
-      "const": "0.1"
+      "const": "0.2"
     },
     "language": {
       "enum": ["java", "csharp"]

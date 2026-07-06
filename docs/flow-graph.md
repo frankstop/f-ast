@@ -29,6 +29,9 @@ type FlowEdgeKind =
 - `loops`: `for`, `foreach`, `while`, `do`.
 - `dependsOn`: imports/usings and unresolved calls.
 
+Regex-derived source edges run against a length-preserving view with comments
+and literals masked, so fake control flow inside non-code text is ignored.
+
 ## Use
 
 Compact output includes flow summaries so agents can see likely execution shape

@@ -5,11 +5,12 @@ describe("schema and docs", () => {
   it("ships parseable CommonAST JSON schema and referenced docs", () => {
     const schema = JSON.parse(fs.readFileSync("schemas/common-ast.schema.json", "utf8")) as {
       title?: string;
-      properties?: Record<string, unknown>;
+      properties?: { version?: { const?: string }; [key: string]: unknown };
     };
     const readme = fs.readFileSync("README.md", "utf8");
 
     expect(schema.title).toBe("CommonAST");
+    expect(schema.properties?.version?.const).toBe("0.2");
     expect(schema.properties).toHaveProperty("root");
     expect(readme).toContain("docs/common-ast.md");
     expect(readme).toContain("docs/symbol-graph.md");
